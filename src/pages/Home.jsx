@@ -66,16 +66,16 @@ export default function Home() {
               />
 
               {/* Boutons d'action - Alignés à droite */}
-              <div className="flex flex-col gap-4 w-[400px] md:w-[600px] lg:w-[800px] xl:w-[950px]">
+              <div className="flex flex-col gap-4">
                 <Link
                   to="/login"
-                  className="w-full text-center px-8 py-4 md:py-5 lg:py-6 border-2 border-white text-white font-bold text-base md:text-lg lg:text-xl xl:text-2xl hover:bg-white hover:text-black transition duration-300 uppercase tracking-wide"
+                  className="text-center text-white hover:bg-white hover:text-black transition duration-300 uppercase"
                 >
                   Créer mon profil
                 </Link>
                 <Link
                   to="/sell"
-                  className="w-full text-center px-8 py-4 md:py-5 lg:py-6 border-2 border-white text-white font-bold text-base md:text-lg lg:text-xl xl:text-2xl hover:bg-white hover:text-black transition duration-300 uppercase tracking-wide"
+                  className="text-center text-white hover:bg-white hover:text-black transition duration-300 uppercase"
                 >
                   Commencer à vendre
                 </Link>
