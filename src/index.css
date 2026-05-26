@@ -18,79 +18,16 @@ html, body, #root {
 
 body {
   line-height: 1.6;
+  margin: 0;
 }
 
-/* Logo Hero - Tailles réactives */
-img[alt="2ROUND Logo"] {
-  max-width: 950px;
-  width: 100%;
-  height: auto;
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Conteneur des boutons Hero - Même taille que le logo */
-.flex.flex-col.gap-4 {
-  max-width: 950px;
-  width: 100%;
-}
-
-/* Boutons Hero - Tailles réactives */
-.flex.flex-col.gap-4 a {
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  border: 2px solid #ffffff !important;
-  padding: 16px 32px !important;
-  font-size: 16px !important;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 300ms ease;
-  display: block;
-  width: 100% !important;
-  text-decoration: none;
-  background-color: transparent !important;
-}
-
-.flex.flex-col.gap-4 a:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-@media (max-width: 1024px) {
-  img[alt="2ROUND Logo"],
-  .flex.flex-col.gap-4 {
-    max-width: 800px;
-  }
-  
-  .flex.flex-col.gap-4 a {
-    padding: 14px 28px !important;
-    font-size: 14px !important;
-  }
-}
-
-@media (max-width: 768px) {
-  img[alt="2ROUND Logo"],
-  .flex.flex-col.gap-4 {
-    max-width: 600px;
-  }
-  
-  .flex.flex-col.gap-4 a {
-    padding: 12px 24px !important;
-    font-size: 13px !important;
-  }
-}
-
-@media (max-width: 640px) {
-  img[alt="2ROUND Logo"],
-  .flex.flex-col.gap-4 {
-    max-width: 400px;
-  }
-  
-  .flex.flex-col.gap-4 a {
-    padding: 10px 20px !important;
-    font-size: 12px !important;
-  }
-}
-
-/* Styles généraux */
+/* Styles généraux des formulaires */
 input, textarea, select {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -102,8 +39,8 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+  border-color: #ff0000; /* Passé en rouge Second Round */
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
 }
 
 button {
@@ -132,60 +69,33 @@ a {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555555;
+  background: #ff0000; /* Passé en rouge au survol de la scrollbar */
 }
 
-body {
-  margin: 0;
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
+/* Typographie de base */
+h1, h2 {
   font-weight: 500;
-  color: var(--text-h);
 }
 
 h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+  h2 {
     font-size: 20px;
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }

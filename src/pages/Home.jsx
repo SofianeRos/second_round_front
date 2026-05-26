@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import api from "../services/api";
 
@@ -9,6 +9,7 @@ const LOGO_URL = "http://localhost:8000/images/logo_page_acceuil.png";
 
 export default function Home() {
   const { token } = useAuth();
+  const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,41 +46,40 @@ export default function Home() {
       <div className="w-full flex-grow flex flex-col">
         {/* Hero Section - Image du backend */}
         <section
-          className="w-full flex-grow min-h-[calc(100vh-60px)] bg-black relative flex items-center justify-end overflow-hidden"
+          className="w-full flex-grow min-h-[calc(100vh-80px)] bg-black relative flex items-center justify-end overflow-hidden"
           style={{
-            backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.3) 100%), url('${HERO_IMAGE}')`,
+            backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.5) 100%), url('${HERO_IMAGE}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
         >
-          {/* Contenu - Aligné à droite */}
-          <div className="relative z-10 pr-6 md:pr-12 lg:pr-20 flex items-center justify-end w-full h-full">
-            {/* Groupe logo + boutons */}
-            <div className="flex flex-col items-end gap-6">
-              {/* Logo Image - Aligné à droite */}
-              <img
-                src={LOGO_URL}
-                alt="2ROUND Logo"
-                className="w-[400px] md:w-[600px] lg:w-[800px] xl:w-[950px] h-auto object-contain drop-shadow-2xl"
-                style={{ filter: "drop-shadow(0 15px 40px rgba(0,0,0,0.8))" }}
-              />
+          {/* Conteneur poussé à droite */}
+          <div className="relative z-10 flex flex-col items-center gap-10 pr-8 md:pr-16 lg:pr-[10%]">
+            
+            {/* Logo - Taille massive */}
+            <img
+              src={LOGO_URL}
+              alt="2ROUND Logo"
+              className="w-[500px] md:w-[700px] lg:w-[850px] xl:w-[950px] h-auto object-contain"
+              style={{ filter: "drop-shadow(0 15px 40px rgba(0,0,0,0.8))" }}
+            />
 
-              {/* Boutons d'action - Alignés à droite */}
-              <div className="flex flex-col gap-4">
-                <Link
-                  to="/login"
-                  className="text-center text-white hover:bg-white hover:text-black transition duration-300 uppercase"
-                >
-                  Créer mon profil
-                </Link>
-                <Link
-                  to="/sell"
-                  className="text-center text-white hover:bg-white hover:text-black transition duration-300 uppercase"
-                >
-                  Commencer à vendre
-                </Link>
-              </div>
+            {/* Boutons - Transparents, contours/texte blancs, rouge au survol */}
+            <div className="flex flex-col gap-6 w-full max-w-[550px]">
+              <button
+                onClick={() => navigate("/login")}
+                className="w-full h-[80px] flex items-center justify-center text-white uppercase bg-transparent border-[4px] border-white font-extrabold text-2xl md:text-3xl hover:bg-[#ff0000] hover:border-[#ff0000] transition-all duration-300 tracking-wider shadow-2xl"
+              >
+                Créer mon profil
+              </button>
+
+              <button
+                onClick={() => navigate("/sell")}
+                className="w-full h-[80px] flex items-center justify-center text-white uppercase bg-transparent border-[4px] border-white font-extrabold text-2xl md:text-3xl hover:bg-[#ff0000] hover:border-[#ff0000] transition-all duration-300 tracking-wider shadow-2xl"
+              >
+                Commencer à vendre
+              </button>
             </div>
           </div>
         </section>
@@ -102,7 +102,7 @@ export default function Home() {
             placeholder="Rechercher un article..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-6 py-3 text-white placeholder-gray-500 focus:border-red-600 focus:outline-none transition"
+            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-6 py-3 text-white placeholder-gray-500 focus:border-[#ff0000] focus:outline-none transition"
           />
         </div>
 
@@ -117,7 +117,7 @@ export default function Home() {
             {filteredArticles.map((article) => (
               <div
                 key={article.id}
-                className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-red-600 transition group"
+                className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-[#ff0000] transition group"
               >
                 {/* Image Placeholder */}
                 <div className="w-full h-48 bg-gray-800 flex items-center justify-center group-hover:bg-gray-700 transition">
@@ -135,12 +135,12 @@ export default function Home() {
 
                   {/* Price and Button */}
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-red-600">
+                    <span className="text-2xl font-bold text-[#ff0000]">
                       {article.prix}€
                     </span>
                     <Link
                       to={`/articles/${article.id}`}
-                      className="bg-red-600 text-white px-4 py-2 rounded font-semibold hover:bg-red-700 transition text-sm"
+                      className="bg-[#ff0000] text-white px-4 py-2 rounded font-semibold hover:bg-red-700 transition text-sm"
                     >
                       Voir
                     </Link>
