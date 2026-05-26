@@ -70,11 +70,21 @@ export default function Login() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-purple-600 text-white py-2 rounded font-bold hover:bg-purple-700 disabled:opacity-50"
+          className="w-full bg-purple-600 text-white py-2 rounded font-bold hover:bg-purple-700 disabled:opacity-50 mb-4"
         >
           {loading ? "Connexion..." : "Connexion"}
         </button>
       </form>
+
+      <p className="text-center text-gray-600">
+        Pas encore de compte ?{" "}
+        <button
+          onClick={() => navigate("/register")}
+          className="text-red-600 hover:text-red-800 font-bold"
+        >
+          Créer mon compte
+        </button>
+      </p>
     </div>
   );
 }
