@@ -18,13 +18,6 @@ html, body, #root {
 
 body {
   line-height: 1.6;
-  margin: 0;
-}
-
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Styles généraux des formulaires */
@@ -39,18 +32,8 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #ff0000; /* Passé en rouge Second Round */
+  border-color: #ff0000;
   box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
-}
-
-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
 }
 
 /* Scrollbar personnalisée */
@@ -69,33 +52,5 @@ a {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff0000; /* Passé en rouge au survol de la scrollbar */
-}
-
-/* Typographie de base */
-h1, h2 {
-  font-weight: 500;
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-}
-
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-}
-
-@media (max-width: 1024px) {
-  h1 {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-  h2 {
-    font-size: 20px;
-  }
+  background: #ff0000;
 }
