@@ -1,16 +1,70 @@
-# React + Vite
+# Second Round Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application front-end React pour le projet Second Round. L'interface est construite avec Vite, React Router et Tailwind CSS, et communique avec une API locale.
 
-Currently, two official plugins are available:
+## Fonctionnalités
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Page d'accueil avec fond plein écran et boutons d'accès
+- Connexion utilisateur
+- Inscription utilisateur
+- Détail d'article
+- Profil utilisateur
+- Page de vente
 
-## React Compiler
+## Prérequis
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 18 ou supérieur
+- npm
+- Backend accessible sur `http://localhost:8000`
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+```
+
+## Démarrage
+
+```bash
+npm run dev
+```
+
+L'application démarre généralement sur `http://localhost:5173` ou le port disponible proposé par Vite.
+
+## Scripts disponibles
+
+- `npm run dev` : lance le serveur de développement
+- `npm run build` : génère la version de production
+- `npm run preview` : prévisualise la build locale
+- `npm run lint` : lance ESLint sur le projet
+
+## Routes
+
+- `/` : accueil
+- `/login` : connexion
+- `/register` : inscription
+- `/articles/:id` : détail d'un article
+- `/profile` : profil utilisateur
+- `/sell` : page de vente
+
+## API
+
+Le front consomme principalement les endpoints suivants :
+
+- `POST /login_check`
+- `POST /register`
+- `GET /articles`
+- `GET /profile`
+- `POST /logout`
+
+## Structure du projet
+
+- `src/pages` : pages principales
+- `src/components` : composants réutilisables
+- `src/context` : contexte d'authentification
+- `src/hooks` : hooks personnalisés
+- `src/services` : configuration et appels API
+
+## Remarques
+
+Les images utilisées dans l'interface sont servies depuis le backend local, notamment le fond principal et le logo de la page d'accueil.

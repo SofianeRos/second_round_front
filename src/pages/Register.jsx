@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 const HERO_IMAGE = "http://localhost:8000/images/background.png";
+const LOGO_URL = "http://localhost:8000/images/logo_page_acceuil.png";
 
 const initialFormState = {
   email: "",
@@ -109,206 +110,237 @@ export default function Register() {
 
   return (
     <div
-      className="flex min-h-screen items-center justify-center px-4 py-8"
+      className="flex min-h-screen flex-col bg-black"
       style={{
         backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%), url('${HERO_IMAGE}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-black/90 p-8 shadow-2xl group">
-        <div className="absolute -inset-1 rounded-2xl bg-[#ff0000] opacity-0 blur transition duration-500 group-hover:opacity-10" />
+      <nav
+        className="w-full border-b border-black px-6 py-3 md:px-8"
+        style={{ backgroundColor: "#000000", opacity: 1 }}
+      >
+        <Link to="/" className="inline-block hover:opacity-80 transition">
+          <img
+            src={LOGO_URL}
+            alt="2ROUND Logo"
+            className="h-10 w-auto object-contain md:h-12 lg:h-14"
+            style={{ maxWidth: "180px" }}
+          />
+        </Link>
+      </nav>
 
-        <div className="relative">
-          <div className="mb-8 text-center">
-            <h1 className="mb-2 text-4xl font-black uppercase tracking-tighter text-white">
-              S'inscrire
-            </h1>
-            <p className="text-sm text-slate-400">
-              Créez un compte pour accéder à la boutique
-            </p>
-          </div>
+      <div className="flex flex-1 items-center justify-center px-8 py-10 md:px-16">
+        <div className="relative w-full max-w-[830px] overflow-hidden rounded-2xl bg-black/90 p-9 shadow-2xl group">
+          <div className="absolute -inset-1 rounded-2xl bg-[#ff0000] opacity-0 blur transition duration-500 group-hover:opacity-10" />
 
-          <form
-            onSubmit={handleRegister}
-            className="mx-auto flex max-w-md flex-col space-y-5"
-          >
-            <div>
-              <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                Pseudo
-              </label>
-              <input
-                type="text"
-                name="pseudo"
-                placeholder="jeandupont"
-                value={formData.pseudo}
-                onChange={handleChange}
-                className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                required
-              />
+          <div className="relative">
+            <div className="mb-8 text-center">
+              <h1 className="mb-2 text-4xl font-black uppercase tracking-tighter text-white">
+                S'inscrire
+              </h1>
+              <p className="text-sm text-slate-400">
+                Créez un compte pour accéder à la boutique
+              </p>
             </div>
 
-            <div>
-              <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="jean@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                required
-              />
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                  Taille (cm)
-                </label>
-                <input
-                  type="number"
-                  name="taille_cm"
-                  placeholder="175"
-                  value={formData.taille_cm}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                  Poids (kg)
-                </label>
-                <input
-                  type="number"
-                  name="poids_kg"
-                  placeholder="70"
-                  value={formData.poids_kg}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                />
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                  Niveau
-                </label>
-                <select
-                  name="niveau"
-                  value={formData.niveau}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all hover:border-[#ff0000] focus:border-[#ff0000]"
-                >
-                  <option value="">Choisir</option>
-                  <option value="debutant">Débutant</option>
-                  <option value="intermediaire">Intermédiaire</option>
-                  <option value="avance">Avancé</option>
-                  <option value="expert">Expert</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                  Type de boxe
-                </label>
-                <select
-                  name="type_boxe"
-                  value={formData.type_boxe}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all hover:border-[#ff0000] focus:border-[#ff0000]"
-                >
-                  <option value="">Choisir</option>
-                  <option value="boxe_anglaise">Boxe Anglaise</option>
-                  <option value="boxe_francaise">Boxe Française</option>
-                  <option value="kickboxing">Kickboxing</option>
-                  <option value="muay_thai">Muay Thai</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                Budget max
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                name="budget_max"
-                placeholder="100"
-                value={formData.budget_max}
-                onChange={handleChange}
-                className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-              />
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                  Mot de passe
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                  Confirmer le mot de passe
-                </label>
-                <input
-                  type="password"
-                  name="password_confirm"
-                  placeholder="••••••••"
-                  value={formData.password_confirm}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-white/15 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                  required
-                />
-              </div>
-            </div>
-
-            {message && (
-              <div
-                className={`rounded-lg border p-4 text-center text-sm font-bold ${
-                  messageType === "success"
-                    ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
-                    : "border-red-500/50 bg-red-500/20 text-red-300"
-                }`}
-              >
-                {message}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-4 w-full rounded-lg border-2 border-black bg-black px-6 py-3 font-black uppercase tracking-widest text-white shadow-lg transition-all hover:bg-[#ff0000] hover:border-[#ff0000] hover:text-white active:scale-95 disabled:cursor-not-allowed disabled:bg-black/50 disabled:text-white/50"
+            <form
+              onSubmit={handleRegister}
+              className="mx-auto flex w-full max-w-[680px] flex-col space-y-5"
             >
-              {loading ? "Inscription en cours..." : "Créer mon compte"}
-            </button>
-          </form>
+              <div>
+                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                  Pseudo
+                </label>
+                <input
+                  type="text"
+                  name="pseudo"
+                  placeholder="jeandupont"
+                  value={formData.pseudo}
+                  onChange={handleChange}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  required
+                />
+              </div>
 
-          <div className="mt-8 border-t border-slate-800 pt-6 text-center">
-            <p className="text-sm text-slate-400">
-              Déjà un compte ?{" "}
-              <Link
-                to="/login"
-                className="font-bold text-sky-300 transition-colors hover:text-sky-200"
+              <div>
+                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="jean@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  required
+                />
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                    Taille (cm)
+                  </label>
+                  <input
+                    type="number"
+                    name="taille_cm"
+                    placeholder="175"
+                    value={formData.taille_cm}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                    Poids (kg)
+                  </label>
+                  <input
+                    type="number"
+                    name="poids_kg"
+                    placeholder="70"
+                    value={formData.poids_kg}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                    Niveau
+                  </label>
+                  <select
+                    name="niveau"
+                    value={formData.niveau}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all hover:border-[#ff0000] focus:border-[#ff0000]"
+                  >
+                    <option value="">Choisir</option>
+                    <option value="debutant">Débutant</option>
+                    <option value="intermediaire">Intermédiaire</option>
+                    <option value="avance">Avancé</option>
+                    <option value="expert">Expert</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                    Type de boxe
+                  </label>
+                  <select
+                    name="type_boxe"
+                    value={formData.type_boxe}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all hover:border-[#ff0000] focus:border-[#ff0000]"
+                  >
+                    <option value="">Choisir</option>
+                    <option value="boxe_anglaise">Boxe Anglaise</option>
+                    <option value="boxe_francaise">Boxe Française</option>
+                    <option value="kickboxing">Kickboxing</option>
+                    <option value="muay_thai">Muay Thai</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                  Budget max
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  name="budget_max"
+                  placeholder="100"
+                  value={formData.budget_max}
+                  onChange={handleChange}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                />
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                    Mot de passe
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                    Confirmer le mot de passe
+                  </label>
+                  <input
+                    type="password"
+                    name="password_confirm"
+                    placeholder="••••••••"
+                    value={formData.password_confirm}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                    required
+                  />
+                </div>
+              </div>
+
+              {message && (
+                <div
+                  className={`rounded-lg border p-4 text-center text-sm font-bold ${
+                    messageType === "success"
+                      ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                      : "border-red-500/50 bg-red-500/20 text-red-300"
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-4 mx-auto inline-flex h-20 w-fit min-w-[340px] items-center justify-center rounded-lg border-2 px-12 text-2xl font-black uppercase tracking-widest shadow-lg transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+                style={{
+                  backgroundColor: "transparent",
+                  color: "#FFFFFF",
+                  borderColor: "#FFFFFF",
+                }}
+                onMouseEnter={(event) => {
+                  event.currentTarget.style.backgroundColor = "#DC2626";
+                  event.currentTarget.style.color = "#FFFFFF";
+                  event.currentTarget.style.borderColor = "#DC2626";
+                }}
+                onMouseLeave={(event) => {
+                  event.currentTarget.style.backgroundColor = "transparent";
+                  event.currentTarget.style.color = "#FFFFFF";
+                  event.currentTarget.style.borderColor = "#FFFFFF";
+                }}
               >
-                Se connecter
-              </Link>
-            </p>
+                {loading ? "Inscription en cours..." : "Créer mon compte"}
+              </button>
+            </form>
+
+            <div className="mt-8 border-t border-slate-800 pt-6 text-center">
+              <p className="text-sm text-slate-400">
+                Déjà un compte ?{" "}
+                <Link
+                  to="/login"
+                  className="font-bold text-sky-300 transition-colors hover:text-sky-200"
+                >
+                  Se connecter
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>
