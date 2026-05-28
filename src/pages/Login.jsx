@@ -119,7 +119,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-3 mx-auto inline-flex h-20 w-fit min-w-[320px] items-center justify-center rounded-lg border-2 px-12 text-2xl font-black uppercase tracking-widest shadow-lg transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-3 mx-auto inline-flex h-24 w-fit min-w-[380px] items-center justify-center rounded-lg border-2 px-12 text-3xl font-black uppercase tracking-widest shadow-lg transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
                 style={{
                   backgroundColor: "transparent",
                   color: "#FFFFFF",
@@ -145,7 +145,7 @@ export default function Login() {
                 Pas encore de compte ?{" "}
                 <Link
                   to="/register"
-                  className="font-bold text-sky-300 transition-colors hover:text-sky-200"
+                  className="font-bold text-red-500 transition-colors hover:text-red-400"
                 >
                   Créer mon compte
                 </Link>
