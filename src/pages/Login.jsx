@@ -12,11 +12,11 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token, login } = useAuth();
 
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/profile");
     }
   }, [token, navigate]);
 
@@ -31,8 +31,8 @@ export default function Login() {
         password,
       });
 
-      localStorage.setItem("token", response.data.token);
-      navigate("/");
+      login(response.data.token);
+      navigate("/profile");
     } catch (err) {
       setError("Email ou mot de passe incorrect");
       console.error(err);
@@ -50,20 +50,6 @@ export default function Login() {
         backgroundPosition: "center",
       }}
     >
-      {/* Navbar forcée en noir opaque */}
-      <nav
-        className="w-full !bg-black border-b border-[#222] px-6 py-4 md:px-12 flex items-center"
-        style={{ backgroundColor: "#000000", opacity: 1 }}
-      >
-        <Link to="/" className="inline-block hover:opacity-80 transition">
-          <img
-            src={LOGO_URL}
-            alt="2ROUND Logo"
-            className="w-[150px] md:w-[180px] h-auto object-contain"
-          />
-        </Link>
-      </nav>
-
       <div className="flex flex-1 items-center justify-center px-4 py-12">
         <div className="relative w-full max-w-[700px] overflow-hidden rounded-2xl bg-black/85 backdrop-blur-md border border-[#333] p-10 md:p-16 shadow-2xl">
           <div className="relative z-10">

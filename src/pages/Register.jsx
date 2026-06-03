@@ -117,20 +117,6 @@ export default function Register() {
         backgroundPosition: "center",
       }}
     >
-      <nav
-        className="w-full border-b border-black px-6 py-3 md:px-8"
-        style={{ backgroundColor: "#000000", opacity: 1 }}
-      >
-        <Link to="/" className="inline-block hover:opacity-80 transition">
-          <img
-            src={LOGO_URL}
-            alt="2ROUND Logo"
-            className="h-10 w-auto object-contain md:h-12 lg:h-14"
-            style={{ maxWidth: "180px" }}
-          />
-        </Link>
-      </nav>
-
       <div className="flex flex-1 items-center justify-center px-8 py-10 md:px-16">
         <div className="relative w-full max-w-[830px] overflow-hidden rounded-2xl bg-black/90 p-9 shadow-2xl group">
           <div className="absolute -inset-1 rounded-2xl bg-[#ff0000] opacity-0 blur transition duration-500 group-hover:opacity-10" />
@@ -309,22 +295,8 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-4 mx-auto inline-flex h-24 w-fit min-w-[400px] items-center justify-center rounded-lg border-2 px-12 text-3xl font-black uppercase tracking-widest shadow-lg transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
-                style={{
-                  backgroundColor: "transparent",
-                  color: "#FFFFFF",
-                  borderColor: "#FFFFFF",
-                }}
-                onMouseEnter={(event) => {
-                  event.currentTarget.style.backgroundColor = "#DC2626";
-                  event.currentTarget.style.color = "#FFFFFF";
-                  event.currentTarget.style.borderColor = "#DC2626";
-                }}
-                onMouseLeave={(event) => {
-                  event.currentTarget.style.backgroundColor = "transparent";
-                  event.currentTarget.style.color = "#FFFFFF";
-                  event.currentTarget.style.borderColor = "#FFFFFF";
-                }}
+                className="mt-8 flex w-full h-[80px] items-center justify-center border-[3px] border-white bg-transparent text-2xl font-black uppercase tracking-widest !text-white transition-all hover:bg-[#ff0000] hover:border-[#ff0000] disabled:cursor-not-allowed disabled:opacity-50"
+                style={{ borderRadius: "0px", color: "#ffffff" }}
               >
                 {loading ? "Inscription en cours..." : "Créer mon compte"}
               </button>
@@ -335,9 +307,9 @@ export default function Register() {
                 Déjà un compte ?{" "}
                 <Link
                   to="/login"
-                  className="font-bold text-red-500 transition-colors hover:text-red-400"
+                  className="font-bold text-[#ff0000] uppercase tracking-wide transition-opacity hover:opacity-80 ml-2"
                 >
-                  Se connecter
+                  SE CONNECTER
                 </Link>
               </p>
             </div>
