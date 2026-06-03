@@ -45,109 +45,97 @@ export default function Login() {
     <div
       className="flex min-h-screen flex-col bg-black"
       style={{
-        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%), url('${HERO_IMAGE}')`,
+        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%), url('${HERO_IMAGE}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
+      {/* Navbar forcée en noir opaque */}
       <nav
-        className="w-full border-b border-black px-6 py-3 md:px-8"
+        className="w-full !bg-black border-b border-[#222] px-6 py-4 md:px-12 flex items-center"
         style={{ backgroundColor: "#000000", opacity: 1 }}
       >
         <Link to="/" className="inline-block hover:opacity-80 transition">
           <img
             src={LOGO_URL}
             alt="2ROUND Logo"
-            className="h-10 w-auto object-contain md:h-12 lg:h-14"
-            style={{ maxWidth: "180px" }}
+            className="w-[150px] md:w-[180px] h-auto object-contain"
           />
         </Link>
       </nav>
 
-      <div className="flex flex-1 items-center justify-center px-8 py-10 md:px-16">
-        <div className="relative w-full max-w-[730px] overflow-hidden rounded-2xl bg-black/90 p-8 shadow-2xl group">
-          <div className="absolute -inset-1 rounded-2xl bg-[#ff0000] opacity-0 blur transition duration-500 group-hover:opacity-10" />
-
-          <div className="relative">
-            <div className="mb-6 text-center">
-              <h1 className="mb-2 text-3xl font-black uppercase tracking-tighter text-white">
-                Se connecter
+      <div className="flex flex-1 items-center justify-center px-4 py-12">
+        <div className="relative w-full max-w-[700px] overflow-hidden rounded-2xl bg-black/85 backdrop-blur-md border border-[#333] p-10 md:p-16 shadow-2xl">
+          <div className="relative z-10">
+            <div className="mb-12 text-center">
+              <h1 className="mb-4 text-4xl md:text-5xl font-black uppercase tracking-tight text-white">
+                SE CONNECTER
               </h1>
-              <p className="text-sm text-slate-400">
-                Connectez-vous pour accéder à votre compte
+              <p className="text-lg text-slate-400 font-light">
+                Connectez-vous pour accéder à votre vestiaire
               </p>
             </div>
 
             {error && (
-              <div className="mb-5 rounded-lg border border-red-500/50 bg-red-500/20 p-4 text-center text-sm font-bold text-red-300">
+              <div className="mb-8 rounded-lg border border-red-500/50 bg-red-500/20 p-4 text-center text-sm font-bold text-red-300">
                 {error}
               </div>
             )}
 
-            <form
-              onSubmit={handleSubmit}
-              className="mx-auto flex w-full max-w-[520px] flex-col space-y-4"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-8">
               <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300">
                   Email
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                  placeholder="jean@example.com"
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
+                  placeholder="boxeur@exemple.com"
                   required
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300">
                   Mot de passe
                 </label>
                 <input
                   type="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
                   placeholder="••••••••"
                   required
                 />
               </div>
 
+              {/* Bouton : modificateurs "!" ajoutés pour écraser le CSS global */}
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-3 mx-auto inline-flex h-24 w-fit min-w-[380px] items-center justify-center rounded-lg border-2 px-12 text-3xl font-black uppercase tracking-widest shadow-lg transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-8 flex w-full !h-[80px] items-center justify-center border-[3px] !border-white !bg-transparent text-2xl font-black uppercase tracking-widest !text-white transition-all hover:!bg-[#ff0000] hover:!border-[#ff0000] hover:!text-white disabled:cursor-not-allowed disabled:opacity-50"
                 style={{
-                  backgroundColor: "transparent",
-                  color: "#FFFFFF",
-                  borderColor: "#FFFFFF",
-                }}
-                onMouseEnter={(event) => {
-                  event.currentTarget.style.backgroundColor = "#DC2626";
-                  event.currentTarget.style.color = "#FFFFFF";
-                  event.currentTarget.style.borderColor = "#DC2626";
-                }}
-                onMouseLeave={(event) => {
-                  event.currentTarget.style.backgroundColor = "transparent";
-                  event.currentTarget.style.color = "#FFFFFF";
-                  event.currentTarget.style.borderColor = "#FFFFFF";
+                  borderRadius: "0px",
+                  height: "80px",
+                  color: "#ffffff",
                 }}
               >
-                {loading ? "Connexion..." : "Connexion"}
+                {loading ? "CONNEXION EN COURS..." : "CONNEXION"}
               </button>
             </form>
 
-            <div className="mt-8 border-t border-slate-800 pt-6 text-center">
-              <p className="text-sm text-slate-400">
+            <div className="mt-12 border-t border-slate-800/80 pt-8 text-center">
+              <p className="text-lg text-slate-400">
                 Pas encore de compte ?{" "}
                 <Link
                   to="/register"
-                  className="font-bold text-red-500 transition-colors hover:text-red-400"
+                  className="font-bold text-[#ff0000] uppercase tracking-wide transition-opacity hover:opacity-80 ml-2"
                 >
-                  Créer mon compte
+                  CRÉER MON PROFIL
                 </Link>
               </p>
             </div>
