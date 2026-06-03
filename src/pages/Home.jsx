@@ -126,7 +126,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         {/* SECTION UN COUP DE POING ? (Intacte, identique à ton code) */}
         <section
           className="w-full min-h-screen flex flex-col justify-center py-20 relative"
@@ -317,7 +316,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         {/* ================= SECTION NOTRE SÉLECTION ================= */}
         <section className="w-full bg-black py-16 flex justify-center">
           <div className="w-full max-w-[1300px] px-4 md:px-8">
@@ -421,6 +419,152 @@ export default function Home() {
             <div className="w-full border-b border-[#222] mt-20"></div>
           </div>
         </section>
+        {/* ================= SECTION TON MATÉRIEL ================= */}
+        <section className="w-full bg-black py-24 flex justify-center">
+          <div className="w-full max-w-[1300px] px-8 flex flex-col">
+            {/* Titre XXL */}
+            <h2 className="text-[50px] lg:text-[85px] font-black text-white uppercase tracking-tight leading-[1.05] mb-16 text-left">
+              TON MATÉRIEL PEUT
+              <br />
+              <span className="text-[#ff0000]">ENCORE</span> FAIRE DES
+              <br />
+              ROUNDS
+            </h2>
+
+            {/* Conteneur aligné en bas */}
+            <div className="flex flex-row justify-between items-end w-full">
+              {/* Grille des badges (SVG en fond + Texte superposé plus gros et en gras) */}
+              <div className="grid grid-cols-2 gap-4 lg:gap-6 w-[65%]">
+                {/* Badge 1 : GAGNE DE L'ARGENT */}
+                <div className="relative flex items-center justify-center w-full">
+                  <svg
+                    viewBox="0 0 408 92"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-auto"
+                  >
+                    <rect
+                      x="1.5"
+                      y="1.5"
+                      width="405"
+                      height="89"
+                      rx="44.5"
+                      stroke="#A6A6A6"
+                      strokeWidth="3"
+                    />
+                  </svg>
+                  <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                    GAGNE DE L'ARGENT
+                  </span>
+                </div>
+
+                {/* Badge 2 : AIDE UN BOXEUR */}
+                <div className="relative flex items-center justify-center w-full">
+                  <svg
+                    viewBox="0 0 351 92"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-auto"
+                  >
+                    <rect
+                      x="1.5"
+                      y="1.5"
+                      width="348"
+                      height="89"
+                      rx="44.5"
+                      stroke="#A6A6A6"
+                      strokeWidth="3"
+                    />
+                  </svg>
+                  <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                    AIDE UN BOXEUR
+                  </span>
+                </div>
+
+                {/* Badge 3 : ÉVITE LE GASPILLAGE */}
+                <div className="relative flex items-center justify-center w-full">
+                  <svg
+                    viewBox="0 0 428 92"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-auto"
+                  >
+                    <rect
+                      x="1.5"
+                      y="1.5"
+                      width="425"
+                      height="89"
+                      rx="44.5"
+                      stroke="#A6A6A6"
+                      strokeWidth="3"
+                    />
+                  </svg>
+                  <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                    ÉVITE LE GASPILLAGE
+                  </span>
+                </div>
+
+                {/* Badge 4 : VENTE SIMPLE ET RAPIDE */}
+                <div className="relative flex items-center justify-center w-full">
+                  <svg
+                    viewBox="0 0 475 92"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-auto"
+                  >
+                    <rect
+                      x="1.5"
+                      y="1.5"
+                      width="472"
+                      height="89"
+                      rx="44.5"
+                      stroke="#A6A6A6"
+                      strokeWidth="3"
+                    />
+                  </svg>
+                  <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                    VENTE SIMPLE ET RAPIDE
+                  </span>
+                </div>
+              </div>
+
+              {/* Bouton Rouge (Fond transparent forcé pour tuer le carré blanc) */}
+              <button
+                onClick={() => {
+                  console.log("Redirection vers la page de revente");
+                  // navigate('/sell');
+                }}
+                className="bg-transparent border-none outline-none p-0 w-[28%] max-w-[286px] cursor-pointer hover:opacity-80 transition-opacity ml-auto"
+              >
+                <svg
+                  viewBox="0 0 286 92"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-full h-auto block"
+                >
+                  <rect
+                    x="1.5"
+                    y="1.5"
+                    width="283"
+                    height="89"
+                    rx="44.5"
+                    fill="#FF0000"
+                    stroke="#FF0000"
+                    strokeWidth="3"
+                  />
+                  <path
+                    d="M257.414 47.4142C258.195 46.6332 258.195 45.3668 257.414 44.5858L244.686 31.8579C243.905 31.0768 242.639 31.0768 241.858 31.8579C241.077 32.6389 241.077 33.9052 241.858 34.6863L253.172 46L241.858 57.3137C241.077 58.0948 241.077 59.3611 241.858 60.1421C242.639 60.9232 243.905 60.9232 244.686 60.1421L257.414 47.4142ZM228 46V48H256V46V44H228V46Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M37.7614 58V34.7273H47.375C49.1174 34.7273 50.6212 35.0417 51.8864 35.6705C53.1591 36.2917 54.1402 37.1856 54.8295 38.3523C55.5189 39.5114 55.8636 40.8864 55.8636 42.4773C55.8636 44.0909 55.5114 45.4621 54.8068 46.5909C54.1023 47.7121 53.1023 48.5682 51.8068 49.1591C50.5114 49.7424 48.9773 50.0341 47.2045 50.0341H41.125V45.6023H46.1591C47.0076 45.6023 47.7159 45.4924 48.2841 45.2727C48.8598 45.0455 49.2955 44.7045 49.5909 44.25C49.8864 43.7879 50.0341 43.197 50.0341 42.4773C50.0341 41.7576 49.8864 41.1629 49.5909 40.6932C49.2955 40.2159 48.8598 39.8598 48.2841 39.625C47.7083 39.3826 47 39.2614 46.1591 39.2614H43.3864V58H37.7614ZM50.8636 47.3636L56.6591 58H50.5227L44.8409 47.3636H50.8636ZM58.9489 58V34.7273H75.1761V39.2955H64.5739V44.0682H74.3466V48.6477H64.5739V53.4318H75.1761V58H58.9489ZM83.983 34.7273L89.1875 51.7727H89.3807L94.5852 34.7273H100.881L93.0284 58H85.5398L77.6875 34.7273H83.983ZM103.386 58V34.7273H119.614V39.2955H109.011V44.0682H118.784V48.6477H109.011V53.4318H119.614V58H103.386ZM142.943 34.7273V58H138.17L128.909 44.5682H128.761V58H123.136V34.7273H127.977L137.136 48.1364H137.33V34.7273H142.943ZM155.082 58H146.48V34.7273H155.071C157.442 34.7273 159.484 35.1932 161.196 36.125C162.916 37.0492 164.241 38.3826 165.173 40.125C166.105 41.8598 166.571 43.9356 166.571 46.3523C166.571 48.7765 166.105 50.8598 165.173 52.6023C164.249 54.3447 162.927 55.6818 161.207 56.6136C159.488 57.5379 157.446 58 155.082 58ZM152.105 53.2045H154.866C156.17 53.2045 157.272 52.9848 158.173 52.5455C159.082 52.0985 159.768 51.375 160.23 50.375C160.7 49.3674 160.935 48.0265 160.935 46.3523C160.935 44.678 160.7 43.3447 160.23 42.3523C159.76 41.3523 159.067 40.6326 158.151 40.1932C157.241 39.7462 156.12 39.5227 154.787 39.5227H152.105V53.2045ZM169.855 58V34.7273H179.469C181.211 34.7273 182.715 35.0417 183.98 35.6705C185.253 36.2917 186.234 37.1856 186.923 38.3523C187.613 39.5114 187.957 40.8864 187.957 42.4773C187.957 44.0909 187.605 45.4621 186.901 46.5909C186.196 47.7121 185.196 48.5682 183.901 49.1591C182.605 49.7424 181.071 50.0341 179.298 50.0341H173.219V45.6023H178.253C179.101 45.6023 179.81 45.4924 180.378 45.2727C180.954 45.0455 181.389 44.7045 181.685 44.25C181.98 43.7879 182.128 43.197 182.128 42.4773C182.128 41.7576 181.98 41.1629 181.685 40.6932C181.389 40.2159 180.954 39.8598 180.378 39.625C179.802 39.3826 179.094 39.2614 178.253 39.2614H175.48V58H169.855ZM182.957 47.3636L188.753 58H182.616L176.935 47.3636H182.957ZM191.043 58V34.7273H207.27V39.2955H196.668V44.0682H206.44V48.6477H196.668V53.4318H207.27V58H191.043Z"
+                    fill="#E9E9E9"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>{" "}
       </div>
     );
   }
