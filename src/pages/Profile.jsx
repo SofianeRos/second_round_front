@@ -2,6 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useState, useEffect } from "react";
 
+const getPhotoUrl = (path) => {
+  if (!path) return "https://via.placeholder.com/300x400/222222/555555?text=PROFIL";
+  if (path.startsWith("http")) return path;
+  return `http://localhost:8000/images/photos/${path}`;
+};
+
 export default function Profile() {
   const { token, user, loading } = useAuth();
   const navigate = useNavigate();
@@ -73,12 +79,15 @@ export default function Profile() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '300px', flexShrink: 0 }}>
             <div style={{ width: '100%', height: '400px', backgroundColor: '#111', border: '1px solid #333', overflow: 'hidden' }}>
               <img 
-                src="https://via.placeholder.com/300x400/222222/555555?text=PROFIL" 
+                src={getPhotoUrl(user?.photoProfil)} 
                 alt="Profil" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: user?.photoProfil ? 'none' : 'grayscale(100%)' }}
               />
             </div>
-            <button style={{ color: '#9ca3af', fontSize: '1rem', background: 'transparent', border: 'none', textAlign: 'left', textDecoration: 'underline', textUnderlineOffset: '4px', cursor: 'pointer', padding: 0 }}>
+            <button 
+              onClick={() => navigate("/profile/edit")}
+              style={{ color: '#9ca3af', fontSize: '1rem', background: 'transparent', border: 'none', textAlign: 'left', textDecoration: 'underline', textUnderlineOffset: '4px', cursor: 'pointer', padding: 0 }}
+            >
               Mettre à jour mon profil
             </button>
           </div>

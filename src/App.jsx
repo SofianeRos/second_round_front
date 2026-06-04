@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 import Sell from "./pages/Sell";
 
 // Components
@@ -24,7 +25,8 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/articles/:id" element={<ProductDetail />} />
-          <Route path="/profile" element={<Profile />} />
+           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/sell" element={<Sell />} />
         </Routes>
       </main>
