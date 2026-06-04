@@ -3,7 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useState, useEffect } from "react";
 
 export default function Profile() {
-  const { token, user } = useAuth();
+  const { token, user, loading } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("articles");
 
@@ -12,6 +12,30 @@ export default function Profile() {
       navigate("/login");
     }
   }, [token, navigate]);
+
+  if (loading || (token && !user)) {
+    return (
+      <div 
+        style={{ 
+          minHeight: '100vh',
+          width: '100%',
+          background: "repeating-linear-gradient(-45deg, #0a0a0a, #0a0a0a 15px, #141414 15px, #141414 30px)",
+          display: 'flex', 
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: '#ffffff',
+          fontSize: '2rem',
+          fontWeight: '900',
+          textTransform: 'uppercase',
+          borderTop: '1px solid #222'
+        }}
+      >
+        Chargement du profil...
+      </div>
+    );
+  }
+
+  console.log("User data in Profile:", user);
 
   return (
     // Conteneur principal : Prend 100% de la largeur et applique le fond rayé
@@ -87,11 +111,11 @@ export default function Profile() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Poids :</span> 
-                <span style={{ color: '#d1d5db' }}>{user?.poids ? `${user.poids} Kg` : "Non renseigné"}</span>
+                <span style={{ color: '#d1d5db' }}>{user?.poidsKg ? `${user.poidsKg} Kg` : "Non renseigné"}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Taille :</span> 
-                <span style={{ color: '#d1d5db' }}>{user?.taille ? `${user.taille} cm` : "Non renseigné"}</span>
+                <span style={{ color: '#d1d5db' }}>{user?.tailleCm ? `${user.tailleCm} cm` : "Non renseigné"}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Niveau :</span> 
