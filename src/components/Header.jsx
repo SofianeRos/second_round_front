@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 
@@ -6,9 +6,12 @@ const LOGO_URL = "http://localhost:8000/images/logo_page_acceuil.png";
 
 export default function Header() {
   const { token, logout } = useAuth();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Correction du bug qui fait planter
-  const navigate = useNavigate(); // Ajout pour la redirection après déconnexion
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchTerm = searchParams.get("search") || "";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   // Fonction de déconnexion
   const handleLogout = () => {
@@ -16,113 +19,212 @@ export default function Header() {
     navigate("/");
   };
 
-  return (
-    <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-4">
-      <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
-        <div className="flex justify-between items-center gap-6 md:gap-8">
-          {/* Logo Image */}
-          <Link
-            to="/"
-            className="flex-shrink-0 hover:opacity-80 transition inline-block"
-          >
-            <img
-              src={LOGO_URL}
-              alt="2ROUND Logo"
-              className="h-10 md:h-14 lg:h-16 w-auto object-contain"
-              style={{ maxWidth: "180px" }}
-            />
-          </Link>
+  const handleSearchChange = (e) => {
+    const val = e.target.value;
+    if (location.pathname !== "/") {
+      navigate(`/?search=${encodeURIComponent(val)}`, { replace: true });
+    } else {
+      setSearchParams(val ? { search: val } : {}, { replace: true });
+    }
+  };
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-3xl justify-center">
+  return (
+    <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-4 w-full flex justify-center">
+      <div className="max-w-screen-2xl w-full px-4 md:px-8 relative">
+        <div className="flex justify-between items-center w-full">
+          {/* Column Left: Logo */}
+          <div className="flex items-center">
+            <Link
+              to="/"
+              className="flex-shrink-0 hover:opacity-80 transition inline-block"
+            >
+              <img
+                src={LOGO_URL}
+                alt="2ROUND Logo"
+                className="h-10 md:h-14 lg:h-16 w-auto object-contain"
+                style={{ maxWidth: "180px" }}
+              />
+            </Link>
+          </div>
+
+          {/* Column Center: Search Bar (Absolutely centered on desktop) */}
+          <div className="hidden md:flex absolute justify-center z-10 w-full max-w-md lg:max-w-xl xl:max-w-2xl" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
             <div className="relative w-full">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                🔍
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.637 10.637Z" />
+                </svg>
               </span>
               <input
                 type="text"
                 placeholder="Recherche des articles"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-black border-2 border-gray-600 rounded-full pl-12 pr-12 py-3 text-white text-base placeholder-gray-500 focus:border-white focus:outline-none transition"
+                onChange={handleSearchChange}
+                className="w-full bg-black border border-white/40 rounded-full search-input py-3 text-white text-base placeholder-gray-500 focus:border-white focus:outline-none transition"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-white transition text-lg">
-                📷
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15a2.25 2.25 0 0 0 2.25-2.25V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                </svg>
               </span>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6 items-center">
-            {token ? (
-              <>
-                {/* Icône Profil (Lien vers le vestiaire/profil) */}
-                <Link to="/profile" className="text-white hover:text-gray-300 transition flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                  </svg>
-                </Link>
-
-                {/* Icône Messages */}
-                <button className="text-white hover:text-gray-300 transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                  </svg>
-                </button>
-
-                {/* Icône Panier */}
-                <button className="text-white hover:text-gray-300 transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                  </svg>
-                </button>
-
-                {/* Bouton DÉCONNEXION (Rouge) */}
-                <button 
-                  onClick={handleLogout}
-                  className="text-[#ff0000] font-bold text-[15px] tracking-widest uppercase hover:text-white transition ml-4"
-                >
-                  Déconnexion
-                </button>
-
-                {/* Menu Burger */}
+          {/* Column Right: Actions Icons */}
+          <div className="flex items-center gap-6">
+            {/* Desktop-only Navigation Icons */}
+            <nav className="hidden md:flex gap-6 items-center">
+              {/* User Dropdown Profile Action */}
+              <div className="relative">
                 <button
-                  className="text-white hover:text-gray-300 transition ml-2"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                  className="text-white hover:text-gray-300 transition flex items-center gap-1 cursor-pointer focus:outline-none"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
+                    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
                   </svg>
-                </button>
-              </>
-            ) : (
-              <>
-                {/* Lien SE CONNECTER */}
-                <Link to="/login" className="text-white font-bold text-[15px] tracking-widest uppercase hover:text-[#ff0000] transition mr-4">
-                  Se connecter
-                </Link>
-
-                {/* Icône Panier */}
-                <button className="text-white hover:text-gray-300 transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-white">
+                    <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
                   </svg>
                 </button>
 
-                {/* Menu Burger */}
-                <button
-                  className="text-white hover:text-gray-300 transition ml-2"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                  </svg>
-                </button>
-              </>
-            )}
-          </nav>
+                {isUserDropdownOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setIsUserDropdownOpen(false)} />
+                    <div className="absolute right-0 mt-3 w-48 bg-[#151515] border border-white/10 rounded-md shadow-2xl py-2 z-50">
+                      {token ? (
+                        <>
+                          <Link
+                            to="/profile"
+                            onClick={() => setIsUserDropdownOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#222] hover:text-white transition-colors"
+                          >
+                            Mon Vestiaire
+                          </Link>
+                          <button
+                            onClick={() => {
+                              setIsUserDropdownOpen(false);
+                              handleLogout();
+                            }}
+                            className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-[#222] hover:text-red-400 transition-colors cursor-pointer"
+                          >
+                            Déconnexion
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            to="/login"
+                            onClick={() => setIsUserDropdownOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#222] hover:text-white transition-colors"
+                          >
+                            Se connecter
+                          </Link>
+                          <Link
+                            to="/register"
+                            onClick={() => setIsUserDropdownOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#222] hover:text-white transition-colors"
+                          >
+                            Créer un compte
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Messages (Paper Airplane) */}
+              <Link to={token ? "/messages" : "/login"} className="text-white hover:text-gray-300 transition inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7" style={{ transform: "rotate(-45deg)", transformOrigin: "center" }}>
+                  <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.53 60.53 0 0 0 17.836-7.948.75.75 0 0 0 0-1.254A60.53 60.53 0 0 0 3.478 2.404Z" />
+                </svg>
+              </Link>
+
+              {/* Cart (Panier) */}
+              <Link to={token ? "/cart" : "/login"} className="text-white hover:text-gray-300 transition inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
+                  <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.58 9.596a3.75 3.75 0 0 0 3.63 2.774h8.337a3.75 3.75 0 0 0 3.62-2.736l1.314-4.908a1.5 1.5 0 0 0-1.45-1.888H6.837l-.234-.867a1.5 1.5 0 0 0-1.451-1.11H2.25Z" />
+                  <path d="M9.5 20.25a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM18.75 20.25a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                </svg>
+              </Link>
+            </nav>
+
+            {/* Hamburger Menu (Visible on all screens) */}
+            <button
+              className="text-white hover:text-gray-300 transition"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Drawer/Menu */}
+      {isMenuOpen && (
+        <>
+          <div className="fixed inset-0 top-[73px] bg-black/80 backdrop-blur-sm z-40 md:hidden" onClick={() => setIsMenuOpen(false)} />
+          <div className="fixed top-[73px] left-0 right-0 bg-[#0a0a0a] border-b border-[#222] p-6 flex flex-col gap-6 z-50 md:hidden">
+            {/* Search Bar for Mobile */}
+            <div className="relative w-full">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.637 10.637Z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Recherche des articles"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="w-full bg-black border border-white/40 rounded-full search-input py-3 text-white text-base placeholder-gray-500 focus:border-white focus:outline-none transition"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15a2.25 2.25 0 0 0 2.25-2.25V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                </svg>
+              </span>
+            </div>
+
+            {/* Navigation links for Mobile */}
+            <div className="flex flex-col gap-4 font-bold tracking-wider text-lg uppercase">
+              {token ? (
+                <>
+                  <Link to="/profile" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
+                    Mon Vestiaire
+                  </Link>
+                  <Link to="/messages" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
+                    Messagerie
+                  </Link>
+                  <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
+                    Panier
+                  </Link>
+                  <button onClick={() => { setIsMenuOpen(false); handleLogout(); }} className="text-red-500 hover:text-red-400 transition text-left py-2">
+                    Déconnexion
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
+                    Se connecter
+                  </Link>
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
+                    Créer un compte
+                  </Link>
+                  <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
+                    Panier
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }
