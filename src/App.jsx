@@ -10,6 +10,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import Sell from "./pages/Sell";
+import Messagerie from "./pages/Messagerie";
 
 // Components
 import Header from "./components/Header";
@@ -28,6 +29,7 @@ function AppContent() {
            <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/sell" element={<Sell />} />
+          <Route path="/messages" element={<Messagerie />} />
         </Routes>
       </main>
       <Footer />
