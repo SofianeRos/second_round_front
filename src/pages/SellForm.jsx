@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import api from "../services/api";
 
-const CATEGORIES = ["Gants", "Casques", "Sacs de frappe", "Bandes", "Cordes à sauter", "Paos", "Mitaines", "Shorts"];
+const CATEGORIES = ["Gants", "Casques", "Sacs de frappe", "Bandes", "Cordes à sauter", "Paos", "Mitaines", "Shorts", "Chaussures"];
 const ETATS      = ["Neuf", "Excellent état", "Très bon état", "Bon état", "État correct", "État Usé"];
-const TAILLES    = ["XS", "S", "M", "L", "XL", "Adulte", "Enfant", "8 oz", "10 oz", "12 oz", "14 oz", "16 oz", "100 cm", "120 cm"];
+const TAILLES    = ["XS", "S", "M", "L", "XL", "Adulte", "Enfant", "8 oz", "10 oz", "12 oz", "14 oz", "16 oz", "100 cm", "120 cm", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"];
 
 export default function SellForm() {
   const { token } = useAuth();
