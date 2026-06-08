@@ -113,7 +113,10 @@ export default function Home() {
               padding: "0 20px",
             }}
           >
-            <div className="text-white text-3xl md:text-4xl font-bold uppercase tracking-[0.3em] cursor-pointer hover:text-[#ff0000] transition-colors duration-300">
+            <div
+              onClick={() => navigate("/guides")}
+              className="text-white text-3xl md:text-4xl font-bold uppercase tracking-[0.3em] cursor-pointer hover:text-[#ff0000] transition-colors duration-300"
+            >
               Guide
             </div>
 
@@ -136,26 +139,26 @@ export default function Home() {
 
       {/* SECTION UN COUP DE POING ? */}
       <section
-        className="w-full flex flex-col items-center justify-center py-72 md:py-96 relative"
+        className="w-full flex flex-col items-center justify-center py-64 md:py-80 relative"
         style={{
           backgroundColor: "#000000",
           backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px)`,
         }}
       >
         {/* Title: full-width, hard left */}
-        <div className="w-full px-8 md:px-16 mb-32 relative z-10">
+        <div className="w-full px-8 md:px-16 mb-24 relative z-10">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-wide text-left">
             UN COUP DE POING ?
           </h2>
         </div>
 
         {/* Centered content block — cards + button */}
-        <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col gap-16 relative z-10">
+        <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col gap-12 relative z-10">
           {/* Cards: equal 3-column grid */}
           <div className="grid grid-cols-3 gap-8 md:gap-10 w-full">
             {/* Card 1: LES TAILLES */}
             <div
-              onClick={() => navigate("/route-tailles")}
+              onClick={() => navigate("/guides/tailles")}
               className="bg-[#1a1a1a] rounded-3xl flex flex-col items-center justify-center p-10 md:p-14 hover:scale-105 hover:bg-[#222] transition-all duration-300 cursor-pointer aspect-square shadow-2xl group"
             >
               <svg
@@ -230,7 +233,7 @@ export default function Home() {
                     fill="#FF0000"
                   />
                   <path
-                    d="M323.348 214.625V76.371C323.348 75.8554 323.334 75.3397 323.309 74.8277C325.099 74.2394 327.008 73.9163 328.993 73.9163C339.079 73.9163 347.281 82.152 347.281 92.2834V198.713C347.281 208.841 339.079 217.076 328.993 217.076C327.008 217.076 325.099 216.753 323.309 216.165C323.334 215.653 323.348 215.141 323.348 214.622V214.625Z"
+                    d="M323.348 214.625V76.371C323.348 75.8554 323.334 75.3397 323.309 74.8277C325.099 74.2394 327.008 73.9163 328.993 73.9163C339.079 73.9163 347.281 82.152 328.993 217.076C327.008 217.076 325.099 216.753 323.309 216.165C323.334 215.653 323.348 215.141 323.348 214.622V214.625Z"
                     fill="#FF0000"
                   />
                   <path
@@ -317,7 +320,7 @@ export default function Home() {
       </section>
 
       {/* ================= SECTION NOTRE SÉLECTION ================= */}
-      <section className="w-full bg-black py-72 md:py-96 flex flex-col items-center justify-center">
+      <section className="w-full bg-black py-64 md:py-80 flex flex-col items-center justify-center">
         {/* Title: full-width, hard left — même logique que UN COUP DE POING */}
         <div className="w-full px-8 md:px-16 mb-32">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-wide text-left">
@@ -371,27 +374,28 @@ export default function Home() {
               );
             })}
           </div>
-
           <div className="w-full border-b border-[#222] mt-40"></div>
         </div>
       </section>
 
       {/* ================= SECTION TON MATÉRIEL ================= */}
-      <section className="w-full bg-black py-72 md:py-96 flex justify-center">
-        <div className="w-full max-w-[1300px] px-8 flex flex-col">
-          {/* Titre XXL */}
-          <h2 className="text-[38px] lg:text-[64px] font-black text-white uppercase tracking-tight leading-[1.05] mb-32 text-left">
+      <section className="w-full bg-black pt-64 pb-[160px] md:pt-80 md:pb-[240px] flex flex-col items-center justify-center">
+        {/* Titre XXL: full-width, hard left (aligné avec Notre Sélection) */}
+        <div className="w-full px-8 md:px-16 mb-28 md:mb-36">
+          <h2 className="text-[38px] lg:text-[64px] font-black text-white uppercase tracking-tight leading-[1.05] text-left">
             TON MATÉRIEL PEUT
             <br />
             <span className="text-[#ff0000]">ENCORE</span> FAIRE DES
             <br />
             ROUNDS
           </h2>
+        </div>
 
-          {/* Conteneur aligné en bas */}
+        {/* Conteneur aligné en bas - centré */}
+        <div className="w-full max-w-[1300px] px-8 md:px-16 flex flex-col">
           <div className="flex flex-row justify-between items-end w-full">
             {/* Grille des badges (SVG en fond + Texte superposé plus gros et en gras) */}
-            <div className="grid grid-cols-2 gap-4 lg:gap-6 w-[65%]">
+            <div className="grid grid-cols-2 gap-3 lg:gap-4 w-[65%]">
               {/* Badge 1 : GAGNE DE L'ARGENT */}
               <div className="relative flex items-center justify-center w-full">
                 <svg
@@ -399,6 +403,7 @@ export default function Home() {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-full h-auto"
+                  style={{ maxHeight: "70px" }}
                 >
                   <rect
                     x="1.5"
@@ -410,7 +415,7 @@ export default function Home() {
                     strokeWidth="3"
                   />
                 </svg>
-                <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                <span className="absolute text-white text-[13px] lg:text-[18px] font-bold tracking-widest whitespace-nowrap">
                   GAGNE DE L'ARGENT
                 </span>
               </div>
@@ -422,6 +427,7 @@ export default function Home() {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-full h-auto"
+                  style={{ maxHeight: "70px" }}
                 >
                   <rect
                     x="1.5"
@@ -433,7 +439,7 @@ export default function Home() {
                     strokeWidth="3"
                   />
                 </svg>
-                <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                <span className="absolute text-white text-[13px] lg:text-[18px] font-bold tracking-widest whitespace-nowrap">
                   AIDE UN BOXEUR
                 </span>
               </div>
@@ -445,6 +451,7 @@ export default function Home() {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-full h-auto"
+                  style={{ maxHeight: "70px" }}
                 >
                   <rect
                     x="1.5"
@@ -456,7 +463,7 @@ export default function Home() {
                     strokeWidth="3"
                   />
                 </svg>
-                <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                <span className="absolute text-white text-[13px] lg:text-[18px] font-bold tracking-widest whitespace-nowrap">
                   ÉVITE LE GASPILLAGE
                 </span>
               </div>
@@ -468,6 +475,7 @@ export default function Home() {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-full h-auto"
+                  style={{ maxHeight: "70px" }}
                 >
                   <rect
                     x="1.5"
@@ -479,19 +487,19 @@ export default function Home() {
                     strokeWidth="3"
                   />
                 </svg>
-                <span className="absolute text-white text-[14px] lg:text-[22px] font-bold tracking-widest whitespace-nowrap">
+                <span className="absolute text-white text-[13px] lg:text-[18px] font-bold tracking-widest whitespace-nowrap">
                   VENTE SIMPLE ET RAPIDE
                 </span>
               </div>
             </div>
 
-            {/* Bouton Rouge (Fond transparent forcé pour tuer le carré blanc) */}
+            {/* Bouton Rouge REVENDRE */}
             <button
               onClick={() => {
                 console.log("Redirection vers la page de revente");
                 // navigate('/sell');
               }}
-              className="bg-transparent border-none outline-none p-0 w-[28%] max-w-[286px] cursor-pointer hover:opacity-80 transition-opacity ml-auto"
+              className="bg-transparent border-none outline-none p-0 w-[28%] max-w-[240px] cursor-pointer hover:opacity-80 transition-opacity ml-auto"
             >
               <svg
                 viewBox="0 0 286 92"

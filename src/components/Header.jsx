@@ -32,7 +32,7 @@ export default function Header() {
 
 
   return (
-    <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-4 w-full flex justify-center">
+    <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-5.5 w-full flex justify-center">
       <div className="max-w-screen-2xl w-full px-4 md:px-8 relative">
         <div className="flex justify-between items-center w-full">
           {/* Column Left: Logo */}
@@ -44,8 +44,8 @@ export default function Header() {
               <img
                 src={LOGO_URL}
                 alt="2ROUND Logo"
-                className="h-10 md:h-14 lg:h-16 w-auto object-contain"
-                style={{ maxWidth: "180px" }}
+                className="h-11 md:h-15 lg:h-18 w-auto object-contain"
+                style={{ maxWidth: "200px" }}
               />
             </Link>
           </div>

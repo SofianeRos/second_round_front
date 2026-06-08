@@ -13,6 +13,8 @@ import SellLanding from "./pages/SellLanding";
 import SellForm from "./pages/SellForm";
 import Messagerie from "./pages/Messagerie";
 import Catalogue from "./pages/Catalogue";
+import Guides from "./pages/Guides";
+import GuideTailles from "./pages/GuideTailles";
 
 // Components
 import Header from "./components/Header";
@@ -34,6 +36,8 @@ function AppContent() {
           <Route path="/sell/form" element={<SellForm />} />
           <Route path="/messages" element={<Messagerie />} />
           <Route path="/catalogue" element={<Catalogue />} />
+          <Route path="/guides" element={<Guides />} />
+          <Route path="/guides/tailles" element={<GuideTailles />} />
         </Routes>
       </main>
       <Footer />
