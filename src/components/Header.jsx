@@ -21,12 +21,15 @@ export default function Header() {
 
   const handleSearchChange = (e) => {
     const val = e.target.value;
-    if (location.pathname !== "/") {
-      navigate(`/?search=${encodeURIComponent(val)}`, { replace: true });
-    } else {
+    if (location.pathname === "/catalogue") {
+      // On est déjà sur le catalogue : on met à jour les params en place
       setSearchParams(val ? { search: val } : {}, { replace: true });
+    } else {
+      // Depuis n'importe quelle autre page → catalogue avec recherche
+      navigate(`/catalogue${val ? `?search=${encodeURIComponent(val)}` : ""}`, { replace: false });
     }
   };
+
 
   return (
     <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-4 w-full flex justify-center">

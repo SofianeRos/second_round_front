@@ -117,7 +117,10 @@ export default function Home() {
               Guide
             </div>
 
-            <div className="text-white text-3xl md:text-4xl font-bold uppercase tracking-[0.3em] cursor-pointer hover:text-[#ff0000] transition-colors duration-300">
+            <div
+              onClick={() => navigate("/catalogue")}
+              className="text-white text-3xl md:text-4xl font-bold uppercase tracking-[0.3em] cursor-pointer hover:text-[#ff0000] transition-colors duration-300"
+            >
               Catalogue
             </div>
 

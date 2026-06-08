@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import Sell from "./pages/Sell";
 import Messagerie from "./pages/Messagerie";
+import Catalogue from "./pages/Catalogue";
 
 // Components
 import Header from "./components/Header";
@@ -30,6 +31,7 @@ function AppContent() {
           <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/sell" element={<Sell />} />
           <Route path="/messages" element={<Messagerie />} />
+          <Route path="/catalogue" element={<Catalogue />} />
         </Routes>
       </main>
       <Footer />
