@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useState, useEffect } from "react";
 import api from "../services/api";
@@ -12,22 +12,48 @@ const getPhotoUrl = (path) => {
 export default function Profile() {
   const { token, user, loading } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const userIdParam = searchParams.get("id");
+
+  const [displayedUser, setDisplayedUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(false);
   const [activeTab, setActiveTab] = useState("articles");
   const [articles, setArticles] = useState([]);
   const [loadingArticles, setLoadingArticles] = useState(true);
 
+  const isOwnProfile = !userIdParam || (user && parseInt(userIdParam) === user.id);
+
   useEffect(() => {
-    if (!token) {
+    if (!token && !userIdParam) {
       navigate("/login");
     }
-  }, [token, navigate]);
+  }, [token, userIdParam, navigate]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (userIdParam) {
+        try {
+          setLoadingUser(true);
+          const response = await api.get(`/users/${userIdParam}`);
+          setDisplayedUser(response.data);
+        } catch (err) {
+          console.error("Error fetching user details:", err);
+        } finally {
+          setLoadingUser(false);
+        }
+      } else {
+        setDisplayedUser(user);
+      }
+    };
+    fetchUser();
+  }, [userIdParam, user]);
 
   useEffect(() => {
     const fetchArticles = async () => {
-      if (user?.id) {
+      if (displayedUser?.id) {
         try {
           setLoadingArticles(true);
-          const response = await api.get(`/articles?vendeur.id=${user.id}`);
+          const response = await api.get(`/articles?vendeur.id=${displayedUser.id}`);
           const data = response.data['hydra:member'] || response.data.member || response.data || [];
           setArticles(data);
         } catch (error) {
@@ -38,9 +64,9 @@ export default function Profile() {
       }
     };
     fetchArticles();
-  }, [user]);
+  }, [displayedUser]);
 
-  if (loading || (token && !user)) {
+  if (loading || loadingUser || (token && !displayedUser && !userIdParam)) {
     return (
       <div 
         style={{ 
@@ -62,10 +88,7 @@ export default function Profile() {
     );
   }
 
-  console.log("User data in Profile:", user);
-
   return (
-    // Conteneur principal : Prend 100% de la largeur et applique le fond rayé
     <div 
       style={{ 
         minHeight: '100vh',
@@ -76,12 +99,10 @@ export default function Profile() {
         borderTop: '1px solid #222'
       }}
     >
-      {/* Conteneur intérieur : Limite la largeur du contenu et le centre */}
       <div style={{ width: '100%', maxWidth: '1200px', padding: '4rem 2rem' }}>
         
-        {/* En-tête : < MON VESTIAIRE (Forcé en blanc) */}
         <button 
-          onClick={() => navigate("/")} 
+          onClick={() => navigate(-1)} 
           style={{ 
             display: 'flex', alignItems: 'center', gap: '1rem', 
             background: 'transparent', border: 'none', 
@@ -90,38 +111,35 @@ export default function Profile() {
             color: '#ffffff'
           }}
         >
-          <span style={{ color: '#ff0000' }}>&lt;</span> MON VESTIAIRE
+          <span style={{ color: '#ff0000' }}>&lt;</span> {isOwnProfile ? "MON VESTIAIRE" : `VESTIAIRE DE ${displayedUser?.pseudo || "UTILISATEUR"}`}
         </button>
 
-        {/* Corps de la carte */}
         <div style={{ display: 'flex', flexDirection: 'row', gap: '5rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
           
-          {/* Colonne Gauche : Photo */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '300px', flexShrink: 0 }}>
             <div style={{ width: '100%', height: '400px', backgroundColor: '#111', border: '1px solid #333', overflow: 'hidden' }}>
               <img 
-                src={getPhotoUrl(user?.photoProfil)} 
+                src={getPhotoUrl(displayedUser?.photoProfil)} 
                 alt="Profil" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: user?.photoProfil ? 'none' : 'grayscale(100%)' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: displayedUser?.photoProfil ? 'none' : 'grayscale(100%)' }}
               />
             </div>
-            <button 
-              onClick={() => navigate("/profile/edit")}
-              style={{ color: '#9ca3af', fontSize: '1rem', background: 'transparent', border: 'none', textAlign: 'left', textDecoration: 'underline', textUnderlineOffset: '4px', cursor: 'pointer', padding: 0 }}
-            >
-              Mettre à jour mon profil
-            </button>
+            {isOwnProfile && (
+              <button 
+                onClick={() => navigate("/profile/edit")}
+                style={{ color: '#9ca3af', fontSize: '1rem', background: 'transparent', border: 'none', textAlign: 'left', textDecoration: 'underline', textUnderlineOffset: '4px', cursor: 'pointer', padding: 0 }}
+              >
+                Mettre à jour mon profil
+              </button>
+            )}
           </div>
 
-          {/* Colonne Droite : Textes et Statistiques */}
           <div style={{ display: 'flex', flexDirection: 'column', color: '#ffffff', paddingTop: '1rem', flex: 1, minWidth: '300px' }}>
             
-            {/* Nom dynamique */}
             <h2 style={{ fontSize: '4.5rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 1rem 0', color: '#ffffff' }}>
-              {user?.pseudo || user?.username || "UTILISATEUR"}
+              {displayedUser?.pseudo || displayedUser?.username || "UTILISATEUR"}
             </h2>
 
-            {/* Étoiles */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '3rem' }}>
               {[1, 2, 3, 4].map(star => (
                 <svg key={star} style={{ width: '32px', height: '32px', color: '#ff0000' }} fill="currentColor" viewBox="0 0 20 20">
@@ -133,30 +151,28 @@ export default function Profile() {
               </svg>
             </div>
 
-            {/* Statistiques alignées et dynamiques */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Type de Boxe :</span> 
-                <span style={{ color: '#d1d5db' }}>{user?.typeBoxe || "Non renseigné"}</span>
+                <span style={{ color: '#d1d5db' }}>{displayedUser?.typeBoxe || "Non renseigné"}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Poids :</span> 
-                <span style={{ color: '#d1d5db' }}>{user?.poidsKg ? `${user.poidsKg} Kg` : "Non renseigné"}</span>
+                <span style={{ color: '#d1d5db' }}>{displayedUser?.poidsKg ? `${displayedUser.poidsKg} Kg` : "Non renseigné"}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Taille :</span> 
-                <span style={{ color: '#d1d5db' }}>{user?.tailleCm ? `${user.tailleCm} cm` : "Non renseigné"}</span>
+                <span style={{ color: '#d1d5db' }}>{displayedUser?.tailleCm ? `${displayedUser.tailleCm} cm` : "Non renseigné"}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ fontWeight: 'bold', width: '200px' }}>Niveau :</span> 
-                <span style={{ color: '#d1d5db' }}>{user?.niveau || "Non renseigné"}</span>
+                <span style={{ color: '#d1d5db' }}>{displayedUser?.niveau || "Non renseigné"}</span>
               </div>
             </div>
 
           </div>
         </div>
 
-        {/* Onglets */}
         <div style={{ display: 'flex', gap: '4rem', marginTop: '5rem', borderTop: '1px solid #333', paddingTop: '2rem' }}>
           <button 
             onClick={() => setActiveTab('articles')}
@@ -180,7 +196,6 @@ export default function Profile() {
           </button>
         </div>
 
-        {/* Contenu de l'onglet */}
         <div style={{ marginTop: '3rem', width: '100%' }}>
           {activeTab === 'articles' ? (
             loadingArticles ? (
@@ -218,7 +233,6 @@ export default function Profile() {
                             </svg>
                           </div>
                         )}
-                        {/* Statut badge */}
                         <div style={{
                           position: 'absolute',
                           top: '10px',
@@ -247,7 +261,6 @@ export default function Profile() {
               </div>
             )
           ) : (
-            /* Onglet Evaluations */
             <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
               Aucune évaluation reçue pour le moment.
             </div>
