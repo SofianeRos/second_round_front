@@ -165,30 +165,7 @@ export default function ProductDetail() {
     if (article.photos && article.photos.length > 0) {
       return article.photos.map(p => `http://localhost:8000/images/photos/${p.nomFichier}`);
     }
-    // Static mockup slides fallback
-    const cat = (article.categorie || "").toLowerCase();
-    if (cat.includes("gant")) {
-      return [
-        "http://localhost:8000/images/photos/gants.png",
-        "http://localhost:8000/images/photos/ensemble_venum.png"
-      ];
-    }
-    if (cat.includes("casque")) {
-      return [
-        "http://localhost:8000/images/photos/casque.png",
-        "http://localhost:8000/images/photos/ensemble_venum.png"
-      ];
-    }
-    if (cat.includes("bande")) {
-      return [
-        "http://localhost:8000/images/photos/ensemble_venum.png",
-        "http://localhost:8000/images/photos/gants.png"
-      ];
-    }
-    return [
-      "http://localhost:8000/images/photos/gants.png",
-      "http://localhost:8000/images/photos/casque.png"
-    ];
+    return [];
   };
 
   const photos = getPhotos();
@@ -216,11 +193,7 @@ export default function ProductDetail() {
     if (item.photos && item.photos.length > 0) {
       return `http://localhost:8000/images/photos/${item.photos[0].nomFichier}`;
     }
-    const cat = (item.categorie || "").toLowerCase();
-    if (cat.includes("gant")) return "http://localhost:8000/images/photos/gants.png";
-    if (cat.includes("casque")) return "http://localhost:8000/images/photos/casque.png";
-    if (cat.includes("bande")) return "http://localhost:8000/images/photos/ensemble_venum.png";
-    return "http://localhost:8000/images/photos/gants.png";
+    return null;
   };
 
   const getSellerRating = () => {
@@ -258,11 +231,21 @@ export default function ProductDetail() {
               </button>
 
               <div className="product-image-carousel">
-                <img 
-                  src={photos[activeIndex]} 
-                  alt={`${article.marque} ${article.categorie}`} 
-                  className="product-carousel-img"
-                />
+                {photos.length > 0 ? (
+                  <img 
+                    src={photos[activeIndex]} 
+                    alt={`${article.marque} ${article.categorie}`} 
+                    className="product-carousel-img"
+                  />
+                ) : (
+                  <div className="catalogue-card-img-placeholder">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <path d="m21 15-5-5L5 21" />
+                    </svg>
+                  </div>
+                )}
 
                 {photos.length > 1 && (
                   <>
@@ -312,11 +295,21 @@ export default function ProductDetail() {
                       onClick={() => navigate(`/articles/${item.id}`)}
                     >
                       <div className="catalogue-card-img-wrap">
-                        <img 
-                          src={getDressingCardPhoto(item)} 
-                          alt={item.categorie} 
-                          className="catalogue-card-img" 
-                        />
+                        {getDressingCardPhoto(item) ? (
+                          <img 
+                            src={getDressingCardPhoto(item)} 
+                            alt={item.categorie} 
+                            className="catalogue-card-img" 
+                          />
+                        ) : (
+                          <div className="catalogue-card-img-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                              <rect x="3" y="3" width="18" height="18" rx="2" />
+                              <circle cx="8.5" cy="8.5" r="1.5" />
+                              <path d="m21 15-5-5L5 21" />
+                            </svg>
+                          </div>
+                        )}
                         <div className="catalogue-card-badge-check" style={{ border: '1px solid rgba(255,255,255,0.4)', background: 'rgba(0,0,0,0.6)' }}>
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                             <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1.5" strokeDasharray="3 3" />
@@ -450,11 +443,21 @@ export default function ProductDetail() {
                     onClick={() => navigate(`/articles/${item.id}`)}
                   >
                     <div className="catalogue-card-img-wrap">
-                      <img 
-                        src={itemPhoto} 
-                        alt={item.categorie} 
-                        className="catalogue-card-img" 
-                      />
+                      {itemPhoto ? (
+                        <img 
+                          src={itemPhoto} 
+                          alt={item.categorie} 
+                          className="catalogue-card-img" 
+                        />
+                      ) : (
+                        <div className="catalogue-card-img-placeholder">
+                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <path d="m21 15-5-5L5 21" />
+                          </svg>
+                        </div>
+                      )}
                       
                       <div className="catalogue-card-badge-check" style={{ border: '1px solid rgba(255,255,255,0.4)', background: 'rgba(0,0,0,0.6)' }}>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
