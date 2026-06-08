@@ -136,7 +136,7 @@ export default function Home() {
 
       {/* SECTION UN COUP DE POING ? */}
       <section
-        className="w-full flex flex-col items-center justify-center py-32 md:py-44 relative"
+        className="w-full flex flex-col items-center justify-center py-52 md:py-64 relative"
         style={{
           backgroundColor: "#000000",
           backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px)`,
@@ -144,7 +144,7 @@ export default function Home() {
       >
         {/* Title: full-width, hard left */}
         <div className="w-full px-8 md:px-16 mb-20 relative z-10">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-wide text-left">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-wide text-left">
             UN COUP DE POING ?
           </h2>
         </div>
@@ -317,10 +317,10 @@ export default function Home() {
       </section>
 
       {/* ================= SECTION NOTRE SÉLECTION ================= */}
-      <section className="w-full bg-black py-32 md:py-44 flex flex-col items-center justify-center">
+      <section className="w-full bg-black py-52 md:py-64 flex flex-col items-center justify-center">
         {/* Title: full-width, hard left — même logique que UN COUP DE POING */}
         <div className="w-full px-8 md:px-16 mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-wide text-left">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-wide text-left">
             NOTRE SELECTION
           </h2>
         </div>
@@ -377,7 +377,7 @@ export default function Home() {
       </section>
 
       {/* ================= SECTION TON MATÉRIEL ================= */}
-      <section className="w-full bg-black py-32 md:py-40 flex justify-center">
+      <section className="w-full bg-black py-44 md:py-56 flex justify-center">
         <div className="w-full max-w-[1300px] px-8 flex flex-col">
           {/* Titre XXL */}
           <h2 className="text-[38px] lg:text-[64px] font-black text-white uppercase tracking-tight leading-[1.05] mb-24 text-left">
