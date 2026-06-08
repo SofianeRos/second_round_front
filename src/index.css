@@ -739,26 +739,21 @@ input:focus, textarea:focus, select:focus {
 .sell-steps-list {
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  position: relative;
+  width: 100%;
 }
 
 .sell-step-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 80px;
+  gap: 40px;
+  width: 100%;
+  position: relative;
 }
 
 .sell-step-row.reversed {
   flex-direction: row-reverse;
-}
-
-@media (max-width: 768px) {
-  .sell-step-row, .sell-step-row.reversed {
-    flex-direction: column;
-    text-align: center;
-    gap: 30px;
-  }
 }
 
 .sell-step-boxer-wrap {
@@ -766,11 +761,10 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 420px;
-  background: #090909;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 20px;
+  max-width: 320px;
+  background: transparent;
+  border: none;
+  padding: 0;
   aspect-ratio: 412/622;
 }
 
@@ -779,6 +773,7 @@ input:focus, textarea:focus, select:focus {
   height: 100%;
   object-fit: contain;
   max-height: 480px;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
 }
 
 .sell-step-text {
@@ -787,13 +782,57 @@ input:focus, textarea:focus, select:focus {
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  z-index: 5;
 }
 
 .sell-step-text.right {
   align-items: flex-start;
 }
 
+/* Staggering and overlapping on desktop only */
+@media (min-width: 769px) {
+  .sell-step-row {
+    max-width: 750px;
+  }
+
+  /* Odd steps (1, 3) aligned left */
+  .sell-step-row:nth-child(odd) {
+    align-self: flex-start;
+  }
+
+  /* Even steps (2, 4) aligned right */
+  .sell-step-row:nth-child(even) {
+    align-self: flex-end;
+  }
+
+  /* Overlapping vertical margins */
+  .sell-step-row:nth-child(2) {
+    margin-top: -150px;
+  }
+  .sell-step-row:nth-child(3) {
+    margin-top: -100px;
+  }
+  .sell-step-row:nth-child(4) {
+    margin-top: -150px;
+  }
+}
+
+/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+  .sell-steps-list {
+    gap: 60px;
+  }
+  
+  .sell-step-row, .sell-step-row.reversed {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .sell-step-boxer-wrap {
+    max-width: 260px;
+  }
+
   .sell-step-text, .sell-step-text.right {
     align-items: center;
   }
