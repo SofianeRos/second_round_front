@@ -525,3 +525,546 @@ input:focus, textarea:focus, select:focus {
   padding: 0 4px;
   user-select: none;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   SELL & REVENTE PAGES
+   ═══════════════════════════════════════════════════════════ */
+
+.sell-root {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sell-hero {
+  width: 100%;
+  background-color: #0c0c0c;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.03) 40px);
+  border-bottom: 1px solid #1a1a1a;
+  padding: 80px 0;
+}
+
+.sell-hero--small {
+  padding: 40px 0;
+}
+
+.sell-hero-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sell-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: absolute;
+  left: 32px;
+  z-index: 10;
+}
+
+.sell-back-btn:hover {
+  border-color: #ff0000;
+  color: #ff0000;
+  background: rgba(255, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.sell-hero-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 60px;
+}
+
+.sell-hero-title {
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 950;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-family: "Outfit", "Inter", sans-serif;
+}
+
+.sell-hero-red {
+  color: #ff0000;
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
+}
+
+.sell-hero-sub {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.sell-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  background: #ff0000;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+}
+
+.sell-cta-btn:hover {
+  background: #e60000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 0, 0, 0.5);
+}
+
+.sell-cta-btn:active {
+  transform: translateY(0);
+}
+
+.sell-cta-btn.small {
+  padding: 12px 28px;
+  font-size: 14px;
+}
+
+.sell-benefits {
+  background-color: #0c0c0c;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 60px 0;
+}
+
+.sell-benefits-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 30px;
+}
+
+@media (max-width: 900px) {
+  .sell-benefits-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+}
+
+.sell-benefit-card {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 380px;
+}
+
+.sell-benefit-title {
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 0.1em;
+}
+
+.sell-benefit-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+.sell-benefit-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 900px) {
+  .sell-benefit-divider {
+    width: 80%;
+    height: 1px;
+  }
+}
+
+.sell-steps {
+  background-color: #000000;
+  padding: 100px 0;
+}
+
+.sell-steps-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.sell-steps-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin-bottom: 80px;
+  font-family: "Outfit", "Inter", sans-serif;
+}
+
+@media (max-width: 768px) {
+  .sell-steps-title {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+}
+
+.sell-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.sell-step-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+.sell-step-row.reversed {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+  .sell-step-row, .sell-step-row.reversed {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+}
+
+.sell-step-boxer-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 420px;
+  background: #090909;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  aspect-ratio: 412/622;
+}
+
+.sell-boxer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 480px;
+}
+
+.sell-step-text {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sell-step-text.right {
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .sell-step-text, .sell-step-text.right {
+    align-items: center;
+  }
+}
+
+.sell-step-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.sell-step-label strong {
+  color: #ff0000;
+  font-weight: 900;
+}
+
+.sell-step-head {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.sell-step-desc {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+.sell-final {
+  background-color: #090909;
+  padding: 80px 0;
+  border-top: 1px solid #151515;
+}
+
+.sell-final-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+
+.sell-final-tagline {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  max-width: 800px;
+  line-height: 1.3;
+}
+
+/* Formulaire */
+
+.sell-form-root {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sell-form-gate {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+  text-align: center;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sell-form-section {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 32px 100px;
+}
+
+@media (max-width: 640px) {
+  .sell-form-section {
+    padding: 20px 16px 60px;
+  }
+}
+
+.sell-form {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.sell-form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.sell-form-step-label {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.sell-form-step-num {
+  color: #ff0000;
+  font-size: 24px;
+  font-weight: 900;
+  margin-right: 12px;
+  font-family: "Outfit", sans-serif;
+}
+
+.sell-form-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sell-form-chip {
+  padding: 10px 20px;
+  background: #0f0f0f;
+  border: 1px solid #262626;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sell-form-chip:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+
+.sell-form-chip.selected {
+  background: rgba(255, 0, 0, 0.1);
+  border-color: #ff0000;
+  color: #ff0000;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.15);
+}
+
+.sell-form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .sell-form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.sell-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sell-form-field label {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sell-form-field input, .sell-form-field select, .sell-form textarea {
+  background: #0f0f0f;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 15px;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.sell-form-field input:focus, .sell-form-field select:focus, .sell-form textarea:focus {
+  border-color: #ff0000;
+  outline: none;
+}
+
+.sell-form-price-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 200px;
+}
+
+.sell-form-price-input {
+  background: #0f0f0f;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  width: 100%;
+}
+
+.sell-form-price-input:focus {
+  border-color: #ff0000;
+}
+
+.sell-form-price-currency {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ff0000;
+}
+
+.sell-form-submit-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  .sell-form-submit-wrap {
+    justify-content: center;
+  }
+  .sell-form-submit-wrap .sell-cta-btn {
+    width: 100%;
+  }
+}
+
+.sell-form-alert {
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sell-form-alert.error {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff4444;
+}
+
+.sell-form-alert.success {
+  background: rgba(0, 255, 0, 0.08);
+  border: 1px solid rgba(0, 255, 0, 0.25);
+  color: #44ff44;
+}
+
+.sell-form-link {
+  color: #ffffff;
+  text-decoration: underline;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  margin-left: 5px;
+}

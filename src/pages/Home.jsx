@@ -124,7 +124,10 @@ export default function Home() {
               Catalogue
             </div>
 
-            <div className="text-white text-3xl md:text-4xl font-bold uppercase tracking-[0.3em] cursor-pointer hover:text-[#ff0000] transition-colors duration-300">
+            <div
+              onClick={() => navigate("/sell")}
+              className="text-white text-3xl md:text-4xl font-bold uppercase tracking-[0.3em] cursor-pointer hover:text-[#ff0000] transition-colors duration-300"
+            >
               Revente
             </div>
           </div>
