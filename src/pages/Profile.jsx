@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useState, useEffect } from "react";
+import api from "../services/api";
 
 const getPhotoUrl = (path) => {
   if (!path) return "https://via.placeholder.com/300x400/222222/555555?text=PROFIL";
@@ -12,12 +13,32 @@ export default function Profile() {
   const { token, user, loading } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("articles");
+  const [articles, setArticles] = useState([]);
+  const [loadingArticles, setLoadingArticles] = useState(true);
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     }
   }, [token, navigate]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      if (user?.id) {
+        try {
+          setLoadingArticles(true);
+          const response = await api.get(`/articles?vendeur.id=${user.id}`);
+          const data = response.data['hydra:member'] || response.data.member || response.data || [];
+          setArticles(data);
+        } catch (error) {
+          console.error("Error fetching user articles:", error);
+        } finally {
+          setLoadingArticles(false);
+        }
+      }
+    };
+    fetchArticles();
+  }, [user]);
 
   if (loading || (token && !user)) {
     return (
@@ -157,6 +178,80 @@ export default function Profile() {
           >
             ÉVALUATIONS
           </button>
+        </div>
+
+        {/* Contenu de l'onglet */}
+        <div style={{ marginTop: '3rem', width: '100%' }}>
+          {activeTab === 'articles' ? (
+            loadingArticles ? (
+              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
+                Chargement des articles...
+              </div>
+            ) : articles.length === 0 ? (
+              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
+                Aucun article en vente pour le moment.
+              </div>
+            ) : (
+              <div className="catalogue-grid">
+                {articles.map((article) => {
+                  const imageUrl = article.photos && article.photos.length > 0
+                    ? `http://localhost:8000/images/photos/${article.photos[0].nomFichier}`
+                    : article.imageUrl
+                      ? `http://localhost:8000${article.imageUrl}`
+                      : null;
+                  
+                  return (
+                    <div 
+                      key={article.id} 
+                      className="catalogue-card"
+                      onClick={() => navigate(`/articles/${article.id}`)}
+                    >
+                      <div className="catalogue-card-img-wrap">
+                        {imageUrl ? (
+                          <img src={imageUrl} alt={article.categorie} className="catalogue-card-img" />
+                        ) : (
+                          <div className="catalogue-card-img-placeholder">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                              <rect x="3" y="3" width="18" height="18" rx="2" />
+                              <circle cx="8.5" cy="8.5" r="1.5" />
+                              <path d="m21 15-5-5L5 21" />
+                            </svg>
+                          </div>
+                        )}
+                        {/* Statut badge */}
+                        <div style={{
+                          position: 'absolute',
+                          top: '10px',
+                          left: '10px',
+                          zIndex: 2,
+                          backgroundColor: article.statut?.couleurBadge || '#10B981',
+                          color: '#fff',
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: '800',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em'
+                        }}>
+                          {article.statut?.libelle || "En vente"}
+                        </div>
+                      </div>
+                      <div className="catalogue-card-info">
+                        <p className="catalogue-card-cat">{article.categorie} <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 'normal' }}>{article.marque}</span></p>
+                        <p className="catalogue-card-detail">{article.taille} · {article.etat}</p>
+                        <p className="catalogue-card-price">{parseFloat(article.prix)}€</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )
+          ) : (
+            /* Onglet Evaluations */
+            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
+              Aucune évaluation reçue pour le moment.
+            </div>
+          )}
         </div>
 
       </div>
