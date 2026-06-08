@@ -136,21 +136,21 @@ export default function Home() {
 
       {/* SECTION UN COUP DE POING ? */}
       <section
-        className="w-full flex flex-col items-center justify-center py-52 md:py-64 relative"
+        className="w-full flex flex-col items-center justify-center py-72 md:py-96 relative"
         style={{
           backgroundColor: "#000000",
           backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px)`,
         }}
       >
         {/* Title: full-width, hard left */}
-        <div className="w-full px-8 md:px-16 mb-20 relative z-10">
+        <div className="w-full px-8 md:px-16 mb-32 relative z-10">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-wide text-left">
             UN COUP DE POING ?
           </h2>
         </div>
 
         {/* Centered content block — cards + button */}
-        <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col gap-10 relative z-10">
+        <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col gap-16 relative z-10">
           {/* Cards: equal 3-column grid */}
           <div className="grid grid-cols-3 gap-8 md:gap-10 w-full">
             {/* Card 1: LES TAILLES */}
@@ -317,9 +317,9 @@ export default function Home() {
       </section>
 
       {/* ================= SECTION NOTRE SÉLECTION ================= */}
-      <section className="w-full bg-black py-52 md:py-64 flex flex-col items-center justify-center">
+      <section className="w-full bg-black py-72 md:py-96 flex flex-col items-center justify-center">
         {/* Title: full-width, hard left — même logique que UN COUP DE POING */}
-        <div className="w-full px-8 md:px-16 mb-20">
+        <div className="w-full px-8 md:px-16 mb-32">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-wide text-left">
             NOTRE SELECTION
           </h2>
@@ -372,15 +372,15 @@ export default function Home() {
             })}
           </div>
 
-          <div className="w-full border-b border-[#222] mt-24"></div>
+          <div className="w-full border-b border-[#222] mt-40"></div>
         </div>
       </section>
 
       {/* ================= SECTION TON MATÉRIEL ================= */}
-      <section className="w-full bg-black py-44 md:py-56 flex justify-center">
+      <section className="w-full bg-black py-72 md:py-96 flex justify-center">
         <div className="w-full max-w-[1300px] px-8 flex flex-col">
           {/* Titre XXL */}
-          <h2 className="text-[38px] lg:text-[64px] font-black text-white uppercase tracking-tight leading-[1.05] mb-24 text-left">
+          <h2 className="text-[38px] lg:text-[64px] font-black text-white uppercase tracking-tight leading-[1.05] mb-32 text-left">
             TON MATÉRIEL PEUT
             <br />
             <span className="text-[#ff0000]">ENCORE</span> FAIRE DES
