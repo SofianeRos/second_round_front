@@ -112,31 +112,30 @@ export default function Register() {
     <div
       className="flex min-h-screen flex-col bg-black"
       style={{
-        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%), url('${HERO_IMAGE}')`,
+        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%), url('${HERO_IMAGE}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-1 items-center justify-center px-8 py-10 md:px-16">
-        <div className="relative w-full max-w-[830px] overflow-hidden rounded-2xl bg-black/90 p-9 shadow-2xl group">
-          <div className="absolute -inset-1 rounded-2xl bg-[#ff0000] opacity-0 blur transition duration-500 group-hover:opacity-10" />
-
-          <div className="relative">
-            <div className="mb-8 text-center">
-              <h1 className="mb-2 text-4xl font-black uppercase tracking-tighter text-white">
-                S'inscrire
+      <div className="flex flex-1 items-center justify-center px-4 py-12">
+        <div className="relative w-full max-w-[800px] overflow-hidden rounded-2xl bg-black/85 backdrop-blur-md border border-[#333] p-10 md:p-16 shadow-2xl">
+          <div className="relative z-10">
+            <div className="mb-12 text-center">
+              <h1 className="mb-4 text-4xl md:text-5xl font-black uppercase tracking-tight text-white">
+                S'INSCRIRE
               </h1>
-              <p className="text-sm text-slate-400">
+              <p className="text-lg text-slate-400 font-light">
                 Créez un compte pour accéder à la boutique
               </p>
             </div>
 
             <form
               onSubmit={handleRegister}
-              className="mx-auto flex w-full max-w-[680px] flex-col space-y-5"
+              className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6"
             >
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+              {/* Pseudo */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
                   Pseudo
                 </label>
                 <input
@@ -145,13 +144,15 @@ export default function Register() {
                   placeholder="jeandupont"
                   value={formData.pseudo}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
                   required
                 />
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+              {/* Email */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
                   Email
                 </label>
                 <input
@@ -160,81 +161,101 @@ export default function Register() {
                   placeholder="jean@example.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
                   required
                 />
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                    Taille (cm)
-                  </label>
-                  <input
-                    type="number"
-                    name="taille_cm"
-                    placeholder="175"
-                    value={formData.taille_cm}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                    Poids (kg)
-                  </label>
-                  <input
-                    type="number"
-                    name="poids_kg"
-                    placeholder="70"
-                    value={formData.poids_kg}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                  />
-                </div>
+              {/* Taille */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
+                  Taille (cm)
+                </label>
+                <input
+                  type="number"
+                  name="taille_cm"
+                  placeholder="175"
+                  value={formData.taille_cm}
+                  onChange={handleChange}
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
+                />
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                    Niveau
-                  </label>
+              {/* Poids */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
+                  Poids (kg)
+                </label>
+                <input
+                  type="number"
+                  name="poids_kg"
+                  placeholder="70"
+                  value={formData.poids_kg}
+                  onChange={handleChange}
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
+                />
+              </div>
+
+              {/* Niveau */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
+                  Niveau
+                </label>
+                <div className="relative">
                   <select
                     name="niveau"
                     value={formData.niveau}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all hover:border-[#ff0000] focus:border-[#ff0000]"
+                    className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 pr-12 text-xl font-medium !text-white outline-none transition-all hover:!border-[#ff0000] focus:!border-[#ff0000] appearance-none"
+                    style={{ borderRadius: "0px" }}
                   >
-                    <option value="">Choisir</option>
-                    <option value="debutant">Débutant</option>
-                    <option value="intermediaire">Intermédiaire</option>
-                    <option value="avance">Avancé</option>
-                    <option value="expert">Expert</option>
+                    <option value="" className="bg-[#151515] text-white">Choisir</option>
+                    <option value="debutant" className="bg-[#151515] text-white">Débutant</option>
+                    <option value="intermediaire" className="bg-[#151515] text-white">Intermédiaire</option>
+                    <option value="avance" className="bg-[#151515] text-white">Avancé</option>
+                    <option value="expert" className="bg-[#151515] text-white">Expert</option>
                   </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-slate-400">
+                    <svg className="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
                 </div>
+              </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                    Type de boxe
-                  </label>
+              {/* Type de boxe */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
+                  Type de boxe
+                </label>
+                <div className="relative">
                   <select
                     name="type_boxe"
                     value={formData.type_boxe}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all hover:border-[#ff0000] focus:border-[#ff0000]"
+                    className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 pr-12 text-xl font-medium !text-white outline-none transition-all hover:!border-[#ff0000] focus:!border-[#ff0000] appearance-none"
+                    style={{ borderRadius: "0px" }}
                   >
-                    <option value="">Choisir</option>
-                    <option value="boxe_anglaise">Boxe Anglaise</option>
-                    <option value="boxe_francaise">Boxe Française</option>
-                    <option value="kickboxing">Kickboxing</option>
-                    <option value="muay_thai">Muay Thai</option>
+                    <option value="" className="bg-[#151515] text-white">Choisir</option>
+                    <option value="boxe_anglaise" className="bg-[#151515] text-white">Boxe Anglaise</option>
+                    <option value="boxe_francaise" className="bg-[#151515] text-white">Boxe Française</option>
+                    <option value="kickboxing" className="bg-[#151515] text-white">Kickboxing</option>
+                    <option value="muay_thai" className="bg-[#151515] text-white">Muay Thai</option>
                   </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-slate-400">
+                    <svg className="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
+              {/* Budget max */}
+              <div className="flex flex-col md:col-span-2">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
                   Budget max
                 </label>
                 <input
@@ -244,45 +265,49 @@ export default function Register() {
                   placeholder="100"
                   value={formData.budget_max}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
                 />
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                    Mot de passe
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-bold uppercase tracking-widest text-slate-300">
-                    Confirmer le mot de passe
-                  </label>
-                  <input
-                    type="password"
-                    name="password_confirm"
-                    placeholder="••••••••"
-                    value={formData.password_confirm}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 p-3 font-medium text-white outline-none transition-all placeholder:text-white/40 hover:border-[#ff0000] focus:border-[#ff0000]"
-                    required
-                  />
-                </div>
+              {/* Mot de passe */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
+                  required
+                />
               </div>
 
+              {/* Confirmer le mot de passe */}
+              <div className="flex flex-col">
+                <label className="mb-3 block text-sm font-bold uppercase tracking-widest text-slate-300 whitespace-nowrap">
+                  Confirmer le mot de passe
+                </label>
+                <input
+                  type="password"
+                  name="password_confirm"
+                  placeholder="••••••••"
+                  value={formData.password_confirm}
+                  onChange={handleChange}
+                  className="w-full !h-16 border-2 !border-slate-700 !bg-black/60 px-5 text-xl font-medium !text-white outline-none transition-all placeholder:!text-white/30 hover:!border-[#ff0000] focus:!border-[#ff0000]"
+                  style={{ borderRadius: "0px" }}
+                  required
+                />
+              </div>
+
+              {/* Error/Success message */}
               {message && (
                 <div
-                  className={`rounded-lg border p-4 text-center text-sm font-bold ${
+                  className={`md:col-span-2 rounded-lg border p-4 text-center text-sm font-bold ${
                     messageType === "success"
                       ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
                       : "border-red-500/50 bg-red-500/20 text-red-300"
@@ -292,18 +317,21 @@ export default function Register() {
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="mt-8 flex w-full h-[80px] items-center justify-center border-[3px] border-white bg-transparent text-2xl font-black uppercase tracking-widest !text-white transition-all hover:bg-[#ff0000] hover:border-[#ff0000] disabled:cursor-not-allowed disabled:opacity-50"
-                style={{ borderRadius: "0px", color: "#ffffff" }}
-              >
-                {loading ? "Inscription en cours..." : "Créer mon compte"}
-              </button>
+              {/* Button */}
+              <div className="md:col-span-2 mt-4">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex w-full !h-[80px] items-center justify-center border-[3px] !border-white !bg-transparent text-2xl font-black uppercase tracking-widest !text-white transition-all hover:!bg-[#ff0000] hover:!border-[#ff0000] hover:!text-white disabled:cursor-not-allowed disabled:opacity-50"
+                  style={{ borderRadius: "0px", height: "80px", color: "#ffffff" }}
+                >
+                  {loading ? "Inscription en cours..." : "Créer mon compte"}
+                </button>
+              </div>
             </form>
 
-            <div className="mt-8 border-t border-slate-800 pt-6 text-center">
-              <p className="text-sm text-slate-400">
+            <div className="mt-12 border-t border-slate-800/80 pt-8 text-center">
+              <p className="text-lg text-slate-400">
                 Déjà un compte ?{" "}
                 <Link
                   to="/login"
