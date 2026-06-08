@@ -8,16 +8,18 @@ export default function Footer() {
   return (
     <footer className="w-full bg-black pt-36 pb-32 flex justify-center border-t border-[#333] mt-32">
       <div className="w-full max-w-[1300px] px-8 grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 items-start">
-        {/* Column 1: Logo & Actions */}
+
+        {/* Column 1: Logo + CTA */}
         <div className="flex flex-col gap-6">
           <img
             src={LOGO_URL}
             alt="2ROUND Logo"
-            className="w-[180px] h-auto object-contain -ml-2"
+            className="w-[180px] h-auto object-contain -ml-2 cursor-pointer"
+            onClick={() => navigate("/")}
           />
           <div className="flex flex-col gap-4 mt-4">
             <span
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/register")}
               className="text-white font-bold text-[17px] uppercase tracking-wider cursor-pointer hover:text-[#ff0000] transition-colors"
             >
               CRÉER MON PROFIL
@@ -31,12 +33,18 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Column 2: Guides & Packs */}
+        {/* Column 2: Catalogue & Guides */}
         <div className="flex flex-col gap-4 md:pt-[106px]">
-          <span className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors">
-            Les Packs
+          <span
+            onClick={() => navigate("/catalogue")}
+            className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors"
+          >
+            Catalogue
           </span>
-          <span className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors">
+          <span
+            onClick={() => navigate("/guides")}
+            className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors"
+          >
             Les Guides
           </span>
         </div>
@@ -46,10 +54,16 @@ export default function Footer() {
           <h3 className="text-white font-bold text-[18px] uppercase tracking-wider mb-2">
             MON ROUND PERSO
           </h3>
-          <span className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors">
-            Pack personnalisé
+          <span
+            onClick={() => navigate("/profile")}
+            className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors"
+          >
+            Mon profil
           </span>
-          <span className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors">
+          <span
+            onClick={() => navigate("/profile")}
+            className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors"
+          >
             Favoris
           </span>
         </div>
@@ -59,11 +73,17 @@ export default function Footer() {
           <h3 className="text-white font-bold text-[18px] uppercase tracking-wider mb-2">
             MON VESTIAIRE
           </h3>
-          <span className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors">
+          <span
+            onClick={() => navigate("/profile")}
+            className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors"
+          >
             Articles
           </span>
-          <span className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors">
-            Évaluations
+          <span
+            onClick={() => navigate("/messages")}
+            className="text-[#f0f0f0] font-normal text-[17px] cursor-pointer hover:text-[#ff0000] transition-colors"
+          >
+            Messages
           </span>
         </div>
       </div>

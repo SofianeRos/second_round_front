@@ -204,8 +204,7 @@ export default function Home() {
 
             {/* Card 2: LES ÉQUIPEMENTS */}
             <div
-              onClick={() => navigate("/route-equipements")}
-              className="bg-[#1a1a1a] rounded-3xl flex flex-col items-center justify-center p-10 md:p-14 hover:scale-105 hover:bg-[#222] transition-all duration-300 cursor-pointer aspect-square shadow-2xl group"
+              className="bg-[#1a1a1a] rounded-3xl flex flex-col items-center justify-center p-10 md:p-14 aspect-square shadow-2xl group opacity-60"
             >
               <svg
                 width="180"
@@ -266,8 +265,7 @@ export default function Home() {
 
             {/* Card 3: BIEN DÉBUTER */}
             <div
-              onClick={() => navigate("/route-debuter")}
-              className="bg-[#1a1a1a] rounded-3xl flex flex-col items-center justify-center p-10 md:p-14 hover:scale-105 hover:bg-[#222] transition-all duration-300 cursor-pointer aspect-square shadow-2xl group"
+              className="bg-[#1a1a1a] rounded-3xl flex flex-col items-center justify-center p-10 md:p-14 aspect-square shadow-2xl group opacity-60"
             >
               <svg
                 width="180"
