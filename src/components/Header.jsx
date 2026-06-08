@@ -145,13 +145,6 @@ export default function Header() {
                 </svg>
               </Link>
 
-              {/* Cart (Panier) */}
-              <Link to={token ? "/cart" : "/login"} className="text-white hover:text-gray-300 transition inline-block">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
-                  <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.58 9.596a3.75 3.75 0 0 0 3.63 2.774h8.337a3.75 3.75 0 0 0 3.62-2.736l1.314-4.908a1.5 1.5 0 0 0-1.45-1.888H6.837l-.234-.867a1.5 1.5 0 0 0-1.451-1.11H2.25Z" />
-                  <path d="M9.5 20.25a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM18.75 20.25a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                </svg>
-              </Link>
             </nav>
 
             {/* Hamburger Menu (Visible on all screens) */}
@@ -204,9 +197,7 @@ export default function Header() {
                   <Link to="/messages" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
                     Messagerie
                   </Link>
-                  <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
-                    Panier
-                  </Link>
+
                   <button onClick={() => { setIsMenuOpen(false); handleLogout(); }} className="text-red-500 hover:text-red-400 transition text-left py-2">
                     Déconnexion
                   </button>
@@ -219,9 +210,7 @@ export default function Header() {
                   <Link to="/register" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
                     Créer un compte
                   </Link>
-                  <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
-                    Panier
-                  </Link>
+
                 </>
               )}
             </div>
