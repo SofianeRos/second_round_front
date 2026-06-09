@@ -22,7 +22,7 @@ export default function ProductDetail() {
   const [evaluations, setEvaluations] = useState([]);
 
   // CTAs
-  const [submittingBuy, setSubmittingBuy] = useState(false);
+  const [submittingMessage, setSubmittingMessage] = useState(false);
   const [showOfferModal, setShowOfferModal] = useState(false);
   const [offerAmount, setOfferAmount] = useState("");
   const [offerLoading, setOfferLoading] = useState(false);
@@ -96,25 +96,25 @@ export default function ProductDetail() {
     localStorage.setItem(`fav_art_${id}`, nextVal ? "true" : "false");
   };
 
-  const handleBuy = async () => {
+  const handleSendMessage = async () => {
     if (!token) {
       navigate('/login');
       return;
     }
-    setSubmittingBuy(true);
+    setSubmittingMessage(true);
     try {
       await api.post('/messageries', {
-        contenu: `Bonjour ! Je souhaite vous acheter cet article : ${article.categorie} ${article.marque} au prix de ${article.prix}€. Pouvez-vous me dire comment organiser le paiement et la livraison ?`,
+        contenu: `Bonjour ! Je suis intéressé(e) par votre article : ${article.categorie} ${article.marque}. Est-il toujours disponible ?`,
         estOffre: false,
         destinataire: `/api/users/${article.vendeur.id}`,
         article: `/api/articles/${article.id}`,
       });
       navigate(`/messages?user=${article.vendeur.id}&article=${article.id}`);
     } catch (err) {
-      console.error("Error initiating purchase", err);
-      alert("Une erreur est survenue lors du démarrage de la discussion d'achat.");
+      console.error("Error initiating conversation", err);
+      alert("Une erreur est survenue lors du démarrage de la discussion.");
     } finally {
-      setSubmittingBuy(false);
+      setSubmittingMessage(false);
     }
   };
 
@@ -395,11 +395,11 @@ export default function ProductDetail() {
 
             <div className="product-actions-ctas">
               <button 
-                onClick={handleBuy} 
-                disabled={submittingBuy}
+                onClick={handleSendMessage} 
+                disabled={submittingMessage}
                 className="product-btn-buy"
               >
-                {submittingBuy ? "Chargement..." : "Acheter"}
+                {submittingMessage ? "Envoi..." : "Envoyer un message"}
               </button>
               <button 
                 onClick={() => { if (!token) navigate('/login'); else setShowOfferModal(true); }}
