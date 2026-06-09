@@ -18,6 +18,7 @@ export default function AdminPanel() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all"); // "all" | "certified" | "uncertified"
   const [togglingId, setTogglingId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
   const [toast, setToast] = useState(null);
 
   // Signalement states
@@ -137,6 +138,23 @@ export default function AdminPanel() {
       showToast("Erreur lors de la mise à jour", false);
     } finally {
       setTogglingId(null);
+    }
+  };
+
+  const handleDeleteArticle = async (article) => {
+    if (!window.confirm(`Voulez-vous vraiment supprimer définitivement l'article "${article.marque} ${article.categorie}" ?`)) {
+      return;
+    }
+    setDeletingId(article.id);
+    try {
+      await api.delete(`/articles/${article.id}`);
+      setArticles((prev) => prev.filter((a) => a.id !== article.id));
+      showToast(`✓ Article "${article.marque} ${article.categorie}" supprimé avec succès !`, true);
+    } catch (err) {
+      console.error("Error deleting article", err);
+      showToast("Erreur lors de la suppression de l'article", false);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -304,7 +322,7 @@ export default function AdminPanel() {
                 {/* Table Header */}
                 <div style={{
                   display: "grid",
-                  gridTemplateColumns: "60px 1fr 1fr 100px 130px 160px",
+                  gridTemplateColumns: "60px 1fr 1fr 100px 130px 150px 140px",
                   gap: "1rem", padding: "0.75rem 1.5rem",
                   color: "rgba(255,255,255,0.25)",
                   fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.12em",
@@ -316,6 +334,7 @@ export default function AdminPanel() {
                   <span>Prix</span>
                   <span>Statut</span>
                   <span>Certification</span>
+                  <span>Actions</span>
                 </div>
 
                 {filtered.map((article) => {
@@ -327,7 +346,7 @@ export default function AdminPanel() {
                       key={article.id}
                       style={{
                         display: "grid",
-                        gridTemplateColumns: "60px 1fr 1fr 100px 130px 160px",
+                        gridTemplateColumns: "60px 1fr 1fr 100px 130px 150px 140px",
                         gap: "1rem", padding: "1rem 1.5rem",
                         background: "#0a0a0a",
                         border: article.certifie ? "1px solid rgba(16,185,129,0.2)" : "1px solid #141414",
@@ -433,6 +452,46 @@ export default function AdminPanel() {
                             Certifier
                           </>
                         )}
+                      </button>
+
+                      {/* Action Supprimer */}
+                      <button
+                        onClick={() => handleDeleteArticle(article)}
+                        disabled={deletingId === article.id}
+                        style={{
+                          padding: "0.55rem 1rem",
+                          borderRadius: "8px",
+                          border: "1px solid rgba(239,68,68,0.4)",
+                          background: "rgba(239,68,68,0.15)",
+                          color: "#ef4444",
+                          fontWeight: "800", fontSize: "12px",
+                          textTransform: "uppercase", letterSpacing: "0.06em",
+                          cursor: deletingId === article.id ? "not-allowed" : "pointer",
+                          opacity: deletingId === article.id ? 0.5 : 1,
+                          transition: "all 0.2s",
+                          display: "flex", alignItems: "center", gap: "6px",
+                          whiteSpace: "nowrap",
+                        }}
+                        onMouseEnter={(e) => {
+                          if (deletingId !== article.id) {
+                            e.currentTarget.style.background = "#ef4444";
+                            e.currentTarget.style.color = "#fff";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (deletingId !== article.id) {
+                            e.currentTarget.style.background = "rgba(239,68,68,0.15)";
+                            e.currentTarget.style.color = "#ef4444";
+                          }
+                        }}
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <polyline points="3 6 5 6 21 6" />
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                          <line x1="10" y1="11" x2="10" y2="17" />
+                          <line x1="14" y1="11" x2="14" y2="17" />
+                        </svg>
+                        {deletingId === article.id ? "..." : "Supprimer"}
                       </button>
                     </div>
                   );

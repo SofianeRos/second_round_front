@@ -494,8 +494,7 @@ export default function Home() {
             {/* Bouton Rouge REVENDRE */}
             <button
               onClick={() => {
-                console.log("Redirection vers la page de revente");
-                // navigate('/sell');
+                navigate("/sell");
               }}
               className="bg-transparent border-none outline-none p-0 w-[28%] max-w-[240px] cursor-pointer hover:opacity-80 transition-opacity ml-auto"
             >

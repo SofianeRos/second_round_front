@@ -16,6 +16,8 @@ import Catalogue from "./pages/Catalogue";
 import Guides from "./pages/Guides";
 import GuideTailles from "./pages/GuideTailles";
 import AdminPanel from "./pages/AdminPanel";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 
 // Components
 import Header from "./components/Header";
@@ -40,6 +42,8 @@ function AppContent() {
           <Route path="/guides" element={<Guides />} />
           <Route path="/guides/tailles" element={<GuideTailles />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment/cancel" element={<PaymentCancel />} />
         </Routes>
       </main>
       <Footer />

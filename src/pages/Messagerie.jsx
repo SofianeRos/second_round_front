@@ -646,6 +646,9 @@ export default function Messagerie() {
   const [reportLoading, setReportLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
+  // Stripe Payment loading
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
   const bottomRef = useRef(null);
   const pollingRef = useRef(null);
 
@@ -791,6 +794,26 @@ export default function Messagerie() {
       alert("Erreur lors de l'envoi du signalement.");
     } finally {
       setReportLoading(false);
+    }
+  };
+
+  const handlePayArticle = async (articleId, price) => {
+    setPaymentLoading(true);
+    try {
+      const response = await api.post("/create-checkout-session", {
+        articleId,
+        prix: price,
+      });
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      } else {
+        alert("Erreur de redirection de paiement.");
+      }
+    } catch (err) {
+      console.error("Error creating checkout session", err);
+      alert("Une erreur est survenue lors de l'initialisation du paiement.");
+    } finally {
+      setPaymentLoading(false);
     }
   };
 
@@ -1076,6 +1099,48 @@ export default function Messagerie() {
                       onMouseLeave={e => { e.currentTarget.style.borderColor = "#333"; e.currentTarget.style.color = "#aaa"; }}
                     >
                       Voir l'annonce
+                    </button>
+                  )}
+
+                  {/* Stripe Payment Button for Buyer — visible only when an offer is accepted */}
+                  {activeConv.article && 
+                   activeConv.article.vendeur?.id !== user?.id && 
+                   activeConv.article.statut?.libelle === 'En vente' && 
+                   activeMessages.some(m => m.estOffre && m.statutOffre === 'accepte') && (
+                    <button
+                      id="pay-article-btn"
+                      disabled={paymentLoading}
+                      onClick={() => {
+                        const acceptedOffer = activeMessages.find(m => m.estOffre && m.statutOffre === 'accepte');
+                        const priceToPay = acceptedOffer ? parseFloat(acceptedOffer.montantOffre) : parseFloat(activeConv.article.prix);
+                        handlePayArticle(activeConv.article.id, priceToPay);
+                      }}
+                      style={{
+                        background: "#ff0000",
+                        border: "none",
+                        borderRadius: 8,
+                        padding: "8px 16px",
+                        color: "#fff",
+                        fontSize: 12,
+                        fontWeight: 900,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
+                        cursor: paymentLoading ? "not-allowed" : "pointer",
+                        opacity: paymentLoading ? 0.6 : 1,
+                        flexShrink: 0,
+                        transition: "opacity 0.2s",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6
+                      }}
+                      onMouseEnter={e => { if (!paymentLoading) e.currentTarget.style.opacity = 0.8; }}
+                      onMouseLeave={e => { if (!paymentLoading) e.currentTarget.style.opacity = 1; }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                        <line x1="1" y1="10" x2="23" y2="10" />
+                      </svg>
+                      {paymentLoading ? "Redirection..." : `Payer ${activeMessages.find(m => m.estOffre && m.statutOffre === 'accepte') ? parseFloat(activeMessages.find(m => m.estOffre && m.statutOffre === 'accepte').montantOffre) : parseFloat(activeConv.article.prix)} €`}
                     </button>
                   )}
                 </div>
