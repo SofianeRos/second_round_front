@@ -310,12 +310,14 @@ export default function ProductDetail() {
                             </svg>
                           </div>
                         )}
-                        <div className="catalogue-card-badge-check" style={{ border: '1px solid rgba(255,255,255,0.4)', background: 'rgba(0,0,0,0.6)' }}>
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                            <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1.5" strokeDasharray="3 3" />
-                            <path d="M7 12l3.5 3.5 6.5-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </div>
+                        {item.certifie && (
+                          <div className="catalogue-card-badge-check" style={{ border: '1px solid rgba(16, 185, 129, 0.4)', background: 'rgba(0,0,0,0.6)' }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                              <circle cx="12" cy="12" r="10" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 3" />
+                              <path d="M7 12l3.5 3.5 6.5-7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </div>
+                        )}
                       </div>
                       <div className="catalogue-card-info">
                         <p className="catalogue-card-cat">{item.categorie} <span>{item.marque}</span></p>
@@ -334,6 +336,36 @@ export default function ProductDetail() {
           <div className="product-right-col">
             <h1 className="product-detail-title">{article.categorie}</h1>
             <p className="product-detail-price">{parseFloat(article.prix)}€</p>
+
+            {/* Badge Certifié */}
+            {article.certifie && (
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                background: 'rgba(16, 185, 129, 0.08)',
+                border: '1px solid rgba(16, 185, 129, 0.35)',
+                borderRadius: '10px', padding: '10px 18px',
+                marginBottom: '2rem',
+              }}>
+                <div style={{
+                  width: '32px', height: '32px', borderRadius: '6px',
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontSize: '12px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#10b981' }}>
+                    Article Certifié Second Round
+                  </p>
+                  <p style={{ margin: '2px 0 0', fontSize: '11px', color: 'rgba(16,185,129,0.6)' }}>
+                    Vérifié manuellement par notre équipe
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className="product-specs-list">
               <div className="product-spec-row">
@@ -459,12 +491,14 @@ export default function ProductDetail() {
                         </div>
                       )}
                       
-                      <div className="catalogue-card-badge-check" style={{ border: '1px solid rgba(255,255,255,0.4)', background: 'rgba(0,0,0,0.6)' }}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                          <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1.5" strokeDasharray="3 3" />
-                          <path d="M7 12l3.5 3.5 6.5-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </div>
+                      {item.certifie && (
+                        <div className="catalogue-card-badge-check" style={{ border: '1px solid rgba(16, 185, 129, 0.4)', background: 'rgba(0,0,0,0.6)' }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 3" />
+                            <path d="M7 12l3.5 3.5 6.5-7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                      )}
 
                       <button
                         className={`catalogue-card-heart${hasFav ? " active" : ""}`}

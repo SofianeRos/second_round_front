@@ -5,7 +5,7 @@ import { useState } from "react";
 const LOGO_URL = "http://localhost:8000/images/logo_page_acceuil.png";
 
 export default function Header() {
-  const { token, logout } = useAuth();
+  const { token, logout, user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -105,6 +105,16 @@ export default function Header() {
                           >
                             Mon Vestiaire
                           </Link>
+                          {user?.roles?.includes('ROLE_ADMIN') && (
+                            <Link
+                              to="/admin"
+                              onClick={() => setIsUserDropdownOpen(false)}
+                              className="block px-4 py-2 text-sm transition-colors"
+                              style={{ color: '#ff6666' }}
+                            >
+                              ⚙ Panel Admin
+                            </Link>
+                          )}
                           <button
                             onClick={() => {
                               setIsUserDropdownOpen(false);
@@ -138,6 +148,41 @@ export default function Header() {
                 )}
               </div>
 
+              {/* Admin Shield Icon — visible uniquement ROLE_ADMIN */}
+              {user?.roles?.includes('ROLE_ADMIN') && (
+                <Link
+                  to="/admin"
+                  title="Panel Admin"
+                  style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                  className="group"
+                >
+                  <div style={{
+                    width: '34px', height: '34px',
+                    borderRadius: '8px',
+                    background: 'rgba(255, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 0, 0, 0.35)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'rgba(255,0,0,0.2)';
+                    e.currentTarget.style.borderColor = 'rgba(255,0,0,0.7)';
+                    e.currentTarget.style.boxShadow = '0 0 12px rgba(255,0,0,0.3)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'rgba(255,0,0,0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(255,0,0,0.35)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                  >
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ff4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <path d="M9 12l2 2 4-4" />
+                    </svg>
+                  </div>
+                </Link>
+              )}
+
               {/* Messages (Paper Airplane) */}
               <Link to={token ? "/messages" : "/login"} className="text-white hover:text-gray-300 transition inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7" style={{ transform: "rotate(-45deg)", transformOrigin: "center" }}>
@@ -146,6 +191,7 @@ export default function Header() {
               </Link>
 
             </nav>
+
 
             {/* Hamburger Menu (Visible on all screens) */}
             <button
@@ -197,7 +243,11 @@ export default function Header() {
                   <Link to="/messages" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-red-500 transition py-2 border-b border-white/5">
                     Messagerie
                   </Link>
-
+                  {user?.roles?.includes('ROLE_ADMIN') && (
+                    <Link to="/admin" onClick={() => setIsMenuOpen(false)} style={{ color: '#ff6666' }} className="hover:opacity-80 transition py-2 border-b border-white/5">
+                      ⚙ Panel Admin
+                    </Link>
+                  )}
                   <button onClick={() => { setIsMenuOpen(false); handleLogout(); }} className="text-red-500 hover:text-red-400 transition text-left py-2">
                     Déconnexion
                   </button>

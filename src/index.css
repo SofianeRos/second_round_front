@@ -1353,10 +1353,12 @@ input:focus, textarea:focus, select:focus {
   border: none;
   cursor: pointer;
   text-align: center;
-  transition: background-color 0.2s;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 .product-btn-buy:hover {
-  background-color: #ffffff;
+  background-color: #ff0000;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.45);
 }
 
 .product-btn-offer {

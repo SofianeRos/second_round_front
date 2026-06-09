@@ -15,6 +15,7 @@ import Messagerie from "./pages/Messagerie";
 import Catalogue from "./pages/Catalogue";
 import Guides from "./pages/Guides";
 import GuideTailles from "./pages/GuideTailles";
+import AdminPanel from "./pages/AdminPanel";
 
 // Components
 import Header from "./components/Header";
@@ -38,6 +39,7 @@ function AppContent() {
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/guides" element={<Guides />} />
           <Route path="/guides/tailles" element={<GuideTailles />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </main>
       <Footer />

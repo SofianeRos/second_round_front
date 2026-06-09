@@ -88,13 +88,15 @@ function CatalogueCard({ article, isFavorite, onToggleFavorite }) {
           </div>
         )}
 
-        {/* Badge check — top right */}
-        <div className="catalogue-card-badge-check">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1.5" strokeDasharray="3 3" />
-            <path d="M7 12l3.5 3.5 6.5-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+        {/* Badge check — top right (visible si certifié) */}
+        {article.certifie && (
+          <div className="catalogue-card-badge-check" style={{ borderColor: 'rgba(16, 185, 129, 0.4)' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 3" />
+              <path d="M7 12l3.5 3.5 6.5-7" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        )}
 
         {/* Heart — bottom right */}
         <button

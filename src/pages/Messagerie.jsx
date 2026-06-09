@@ -270,7 +270,7 @@ function OfferBubble({ msg, currentUserId, onAccept, onRefuse }) {
   );
 }
 
-function TextBubble({ msg, currentUserId }) {
+function TextBubble({ msg, currentUserId, onReport }) {
   const isOwn = msg.expediteur?.id === currentUserId;
   return (
     <div
@@ -300,6 +300,31 @@ function TextBubble({ msg, currentUserId }) {
       >
         {msg.contenu}
       </div>
+      {!isOwn && onReport && (
+        <button
+          onClick={() => onReport(msg)}
+          title="Signaler ce message"
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "#444",
+            cursor: "pointer",
+            padding: 4,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "color 0.2s",
+            alignSelf: "center",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = "#ef4444"}
+          onMouseLeave={e => e.currentTarget.style.color = "#444"}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+            <line x1="4" y1="22" x2="4" y2="15" />
+          </svg>
+        </button>
+      )}
       {isOwn && (
         <Avatar user={msg.expediteur} size={28} />
       )}
@@ -456,6 +481,142 @@ function OfferModal({ article, onClose, onSubmit, loading }) {
   );
 }
 
+// ─── Report Modal ─────────────────────────────────────────────────────────────
+
+function ReportModal({ message, onClose, onSubmit, loading }) {
+  const [reason, setReason] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (reason.trim()) {
+      onSubmit(reason.trim());
+    }
+  };
+
+  return (
+    <div
+      id="report-modal-overlay"
+      onClick={e => { if (e.target.id === "report-modal-overlay") onClose(); }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.85)",
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backdropFilter: "blur(4px)",
+        animation: "fadeIn 0.15s ease",
+      }}
+    >
+      <div
+        style={{
+          background: "#111",
+          border: "1.5px solid #2a2a2a",
+          borderRadius: 16,
+          padding: "32px",
+          width: "100%",
+          maxWidth: 450,
+          boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+        }}
+      >
+        <h2 style={{ fontSize: 20, fontWeight: 900, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em", color: "#ff4444", display: "flex", alignItems: "center", gap: 10 }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+            <line x1="4" y1="22" x2="4" y2="15" />
+          </svg>
+          Signaler un message
+        </h2>
+        
+        <div style={{ background: "#1a1a1a", borderRadius: 10, padding: "14px 18px", marginBottom: 20, border: "1px solid #222" }}>
+          <p style={{ color: "#888", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
+            Message de {message.expediteur?.pseudo}
+          </p>
+          <p style={{ color: "#fff", fontSize: 14, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>
+            "{message.contenu}"
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <label style={{ display: "block", color: "#aaa", fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>
+            Raison du signalement
+          </label>
+          <textarea
+            id="report-reason-input"
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+            placeholder="Pourquoi signalez-vous ce message ? (ex: harcèlement, propos injurieux, spam...)"
+            required
+            rows={3}
+            autoFocus
+            style={{
+              width: "100%",
+              background: "#1a1a1a",
+              border: "1.5px solid #333",
+              borderRadius: 10,
+              padding: "12px 14px",
+              fontSize: 14,
+              color: "#fff",
+              outline: "none",
+              resize: "none",
+              transition: "border-color 0.2s",
+              marginBottom: 24,
+            }}
+            onFocus={e => (e.target.style.borderColor = "#ff4444")}
+            onBlur={e => (e.target.style.borderColor = "#333")}
+          />
+
+          <div style={{ display: "flex", gap: 10 }}>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                flex: 1,
+                background: "transparent",
+                border: "1.5px solid #333",
+                borderRadius: 10,
+                padding: "13px",
+                color: "#aaa",
+                fontWeight: 700,
+                fontSize: 14,
+                cursor: "pointer",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                transition: "border-color 0.2s",
+              }}
+              onMouseEnter={e => (e.target.style.borderColor = "#666")}
+              onMouseLeave={e => (e.target.style.borderColor = "#333")}
+            >
+              Annuler
+            </button>
+            <button
+              id="report-submit-btn"
+              type="submit"
+              disabled={loading || !reason.trim()}
+              style={{
+                flex: 2,
+                background: loading || !reason.trim() ? "#333" : "#ff4444",
+                border: "none",
+                borderRadius: 10,
+                padding: "13px",
+                color: "#fff",
+                fontWeight: 900,
+                fontSize: 14,
+                cursor: loading || !reason.trim() ? "not-allowed" : "pointer",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                transition: "background 0.2s, opacity 0.2s",
+              }}
+            >
+              {loading ? "Envoi…" : "Envoyer le signalement"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Page ───────────────────────────────────────────────────────────────
 
 export default function Messagerie() {
@@ -478,6 +639,12 @@ export default function Messagerie() {
   // Offer modal
   const [showOfferModal, setShowOfferModal] = useState(false);
   const [offerLoading, setOfferLoading] = useState(false);
+
+  // Report modal
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportingMessage, setReportingMessage] = useState(null);
+  const [reportLoading, setReportLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
 
   const bottomRef = useRef(null);
   const pollingRef = useRef(null);
@@ -604,6 +771,26 @@ export default function Messagerie() {
       console.error("Erreur envoi offre:", err);
     } finally {
       setOfferLoading(false);
+    }
+  };
+
+  const handleSendReport = async (reason) => {
+    if (!reportingMessage) return;
+    setReportLoading(true);
+    try {
+      await api.post("/signalements", {
+        message: `/api/messageries/${reportingMessage.id}`,
+        raison: reason,
+      });
+      setShowReportModal(false);
+      setReportingMessage(null);
+      setToastMessage("✓ Signalement envoyé avec succès !");
+      setTimeout(() => setToastMessage(null), 3000);
+    } catch (err) {
+      console.error("Erreur envoi signalement:", err);
+      alert("Erreur lors de l'envoi du signalement.");
+    } finally {
+      setReportLoading(false);
     }
   };
 
@@ -940,7 +1127,7 @@ export default function Messagerie() {
                               onRefuse={handleRefuseOffer}
                             />
                           ) : (
-                            <TextBubble msg={msg} currentUserId={user?.id} />
+                            <TextBubble msg={msg} currentUserId={user?.id} onReport={(m) => { setReportingMessage(m); setShowReportModal(true); }} />
                           )}
                           {/* Timestamp under bubble */}
                           <div style={{
@@ -1064,6 +1251,33 @@ export default function Messagerie() {
           onSubmit={handleSendOffer}
           loading={offerLoading}
         />
+      )}
+
+      {/* ── Report Modal ── */}
+      {showReportModal && reportingMessage && (
+        <ReportModal
+          message={reportingMessage}
+          onClose={() => { setShowReportModal(false); setReportingMessage(null); }}
+          onSubmit={handleSendReport}
+          loading={reportLoading}
+        />
+      )}
+
+      {/* ── Toast ── */}
+      {toastMessage && (
+        <div style={{
+          position: "fixed", top: "90px", right: "24px", zIndex: 9999,
+          background: "rgba(16, 185, 129, 0.15)",
+          border: "1px solid #10b981",
+          borderRadius: "10px", padding: "14px 20px",
+          color: "#6ee7b7",
+          fontWeight: "700", fontSize: "14px",
+          backdropFilter: "blur(10px)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+          animation: "fadeIn 0.2s ease",
+        }}>
+          {toastMessage}
+        </div>
       )}
     </>
   );

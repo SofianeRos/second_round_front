@@ -66,6 +66,54 @@ export default function Profile() {
     fetchArticles();
   }, [displayedUser]);
 
+  // ── Favoris ──────────────────────────────────────────────
+  const getFavIds = () => {
+    const ids = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith("fav_art_") && localStorage.getItem(key) === "true") {
+        const id = parseInt(key.replace("fav_art_", ""), 10);
+        if (!isNaN(id)) ids.push(id);
+      }
+    }
+    return ids;
+  };
+
+  const [favIds, setFavIds] = useState(() => getFavIds());
+  const [favArticles, setFavArticles] = useState([]);
+  const [loadingFavs, setLoadingFavs] = useState(false);
+
+  useEffect(() => {
+    if (activeTab !== "favoris" || !isOwnProfile) return;
+    const ids = getFavIds();
+    setFavIds(ids);
+    if (ids.length === 0) {
+      setFavArticles([]);
+      return;
+    }
+    const fetchFavs = async () => {
+      setLoadingFavs(true);
+      try {
+        const results = await Promise.all(
+          ids.map((id) => api.get(`/articles/${id}`).catch(() => null))
+        );
+        setFavArticles(results.filter(Boolean).map((r) => r.data));
+      } catch (err) {
+        console.error("Error fetching favorites:", err);
+      } finally {
+        setLoadingFavs(false);
+      }
+    };
+    fetchFavs();
+  }, [activeTab, isOwnProfile]);
+
+  const removeFav = (articleId) => {
+    localStorage.setItem(`fav_art_${articleId}`, "false");
+    setFavArticles((prev) => prev.filter((a) => a.id !== articleId));
+    setFavIds((prev) => prev.filter((id) => id !== articleId));
+  };
+  // ─────────────────────────────────────────────────────────
+
   if (loading || loadingUser || (token && !displayedUser && !userIdParam)) {
     return (
       <div 
@@ -173,7 +221,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '4rem', marginTop: '5rem', borderTop: '1px solid #333', paddingTop: '2rem' }}>
+        <div style={{ display: 'flex', gap: '4rem', marginTop: '5rem', borderTop: '1px solid #333', paddingTop: '2rem', flexWrap: 'wrap' }}>
           <button 
             onClick={() => setActiveTab('articles')}
             style={{ 
@@ -194,10 +242,40 @@ export default function Profile() {
           >
             ÉVALUATIONS
           </button>
+          {isOwnProfile && (
+            <button 
+              onClick={() => setActiveTab('favoris')}
+              style={{ 
+                paddingBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 'bold', fontSize: '1.25rem', 
+                background: 'transparent', border: 'none', borderBottom: activeTab === 'favoris' ? '4px solid #ff0000' : '4px solid transparent',
+                color: activeTab === 'favoris' ? '#ffffff' : '#6b7280', cursor: 'pointer', paddingLeft: 0, paddingRight: 0,
+                display: 'flex', alignItems: 'center', gap: '0.5rem'
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill={activeTab === 'favoris' ? '#ff0000' : 'none'} stroke={activeTab === 'favoris' ? '#ff0000' : '#6b7280'} strokeWidth="2">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+              MES FAVORIS
+              {favIds.length > 0 && (
+                <span style={{
+                  background: '#ff0000',
+                  color: '#fff',
+                  fontSize: '0.7rem',
+                  fontWeight: '900',
+                  borderRadius: '999px',
+                  padding: '1px 7px',
+                  minWidth: '20px',
+                  textAlign: 'center',
+                }}>
+                  {favIds.length}
+                </span>
+              )}
+            </button>
+          )}
         </div>
 
         <div style={{ marginTop: '3rem', width: '100%' }}>
-          {activeTab === 'articles' ? (
+          {activeTab === 'articles' && (
             loadingArticles ? (
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
                 Chargement des articles...
@@ -260,11 +338,132 @@ export default function Profile() {
                 })}
               </div>
             )
-          ) : (
+          )}
+
+          {activeTab === 'evaluations' && (
             <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
               Aucune évaluation reçue pour le moment.
             </div>
           )}
+
+          {activeTab === 'favoris' && isOwnProfile && (
+            <div style={{ width: '100%' }}>
+              {loadingFavs ? (
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1.2rem', padding: '2rem 0' }}>
+                  Chargement des favoris...
+                </div>
+              ) : favArticles.length === 0 ? (
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '1.5rem',
+                  padding: '5rem 2rem',
+                  textAlign: 'center',
+                }}>
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                  <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '1.1rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    Aucun favori pour l'instant
+                  </p>
+                  <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.95rem' }}>
+                    Clique sur le ❤ d'un article pour le retrouver ici
+                  </p>
+                  <button
+                    onClick={() => navigate('/catalogue')}
+                    style={{
+                      marginTop: '0.5rem',
+                      background: '#ff0000',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '0.75rem 2rem',
+                      fontWeight: '900',
+                      fontSize: '1rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Explorer le catalogue
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.9rem', marginBottom: '2rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    {favArticles.length} article{favArticles.length > 1 ? 's' : ''} sauvegardé{favArticles.length > 1 ? 's' : ''}
+                  </p>
+                  <div className="catalogue-grid">
+                    {favArticles.map((article) => {
+                      const imageUrl = article.photos && article.photos.length > 0
+                        ? `http://localhost:8000/images/photos/${article.photos[0].nomFichier}`
+                        : null;
+
+                      return (
+                        <div
+                          key={article.id}
+                          className="catalogue-card"
+                          style={{ position: 'relative' }}
+                          onClick={() => navigate(`/articles/${article.id}`)}
+                        >
+                          <div className="catalogue-card-img-wrap">
+                            {imageUrl ? (
+                              <img src={imageUrl} alt={article.categorie} className="catalogue-card-img" />
+                            ) : (
+                              <div className="catalogue-card-img-placeholder">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                                  <circle cx="8.5" cy="8.5" r="1.5" />
+                                  <path d="m21 15-5-5L5 21" />
+                                </svg>
+                              </div>
+                            )}
+
+                            <button
+                              onClick={(e) => { e.stopPropagation(); removeFav(article.id); }}
+                              title="Retirer des favoris"
+                              style={{
+                                position: 'absolute',
+                                bottom: '12px',
+                                right: '12px',
+                                zIndex: 10,
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                background: 'rgba(0,0,0,0.7)',
+                                border: '1px solid rgba(255,0,0,0.5)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                backdropFilter: 'blur(4px)',
+                                transition: 'transform 0.2s, background 0.2s',
+                              }}
+                              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'}
+                              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                            >
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff0000" stroke="#ff0000" strokeWidth="1.5">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                              </svg>
+                            </button>
+                          </div>
+                          <div className="catalogue-card-info">
+                            <p className="catalogue-card-cat">
+                              {article.categorie} <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 'normal' }}>{article.marque}</span>
+                            </p>
+                            <p className="catalogue-card-detail">{article.taille} · {article.etat}</p>
+                            <p className="catalogue-card-price">{parseFloat(article.prix)}€</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
         </div>
 
       </div>

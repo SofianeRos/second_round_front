@@ -34,7 +34,8 @@ export default function Login() {
       login(response.data.token);
       navigate("/profile");
     } catch (err) {
-      setError("Email ou mot de passe incorrect");
+      const serverMessage = err.response?.data?.message || err.response?.data?.error;
+      setError(serverMessage || "Email ou mot de passe incorrect");
       console.error(err);
     } finally {
       setLoading(false);
