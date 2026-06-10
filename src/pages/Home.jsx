@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await api.get("/articles");
+        const response = await api.get("/articles?pagination=false");
         setArticles(response.data.member || response.data);
         setFilteredArticles(response.data.member || response.data);
       } catch (err) {

@@ -32,7 +32,7 @@ export default function Header() {
 
 
   return (
-    <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-5.5 w-full flex justify-center">
+    <header className="bg-black border-b border-[#222] sticky top-0 z-50 py-4 w-full flex justify-center">
       <div className="max-w-screen-2xl w-full px-4 md:px-8 relative">
         <div className="flex justify-between items-center w-full">
           {/* Column Left: Logo */}
@@ -44,14 +44,14 @@ export default function Header() {
               <img
                 src={LOGO_URL}
                 alt="2ROUND Logo"
-                className="h-11 md:h-15 lg:h-18 w-auto object-contain"
+                className="h-10 md:h-12 lg:h-14 w-auto object-contain"
                 style={{ maxWidth: "200px" }}
               />
             </Link>
           </div>
 
-          {/* Column Center: Search Bar (Absolutely centered on desktop) */}
-          <div className="hidden md:flex absolute justify-center z-10 w-full max-w-md lg:max-w-xl xl:max-w-2xl" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+          {/* Column Center: Search Bar (Centered between logo and actions) */}
+          <div className="hidden md:flex justify-center z-10 w-full max-w-md lg:max-w-xl xl:max-w-2xl">
             <div className="relative w-full">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">

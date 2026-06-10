@@ -142,7 +142,7 @@ export default function Catalogue() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await api.get("/articles");
+        const res = await api.get("/articles?pagination=false");
         setArticles(res.data.member || res.data || []);
       } catch (e) {
         console.error(e);
