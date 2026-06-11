@@ -18,6 +18,7 @@ import GuideTailles from "./pages/GuideTailles";
 import AdminPanel from "./pages/AdminPanel";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
+import PaymentMockCheckout from "./pages/PaymentMockCheckout";
 
 // Components
 import Header from "./components/Header";
@@ -44,6 +45,7 @@ function AppContent() {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
           <Route path="/payment/cancel" element={<PaymentCancel />} />
+          <Route path="/payment/mock-checkout" element={<PaymentMockCheckout />} />
         </Routes>
       </main>
       <Footer />
