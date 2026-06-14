@@ -436,59 +436,56 @@ export default function Home() {
       </section>
 
       {/* BOX 3: SECTION TON MATÉRIEL */}
-      <section className="w-full min-h-[85vh] bg-[#0c0c0c] border-b border-white/10 py-16 md:py-24 flex flex-col items-center relative overflow-hidden">
-        <div className="w-full max-w-[1400px] px-6 md:px-12 flex flex-col gap-8 md:gap-12 flex-grow">
-          {/* Titre XXL */}
-          <div className="w-full pt-20 md:pt-28">
+      <section className="w-full min-h-[50vh] bg-black border-b border-white/10 py-20 md:py-28 flex justify-center items-center">
+        <div className="w-full max-w-[1400px] px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-12 w-full">
+          
+          {/* Left Column: Title + Badges */}
+          <div className="flex flex-col gap-8 md:gap-12 flex-grow max-w-[800px]">
+            {/* Title */}
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-[1.1] text-left">
               TON MATÉRIEL PEUT<br />
               <span className="text-[#ff0000]">ENCORE</span> FAIRE DES<br />
               ROUNDS
             </h2>
-          </div>
 
-          {/* Badges and button wrapper */}
-          <div className="w-full flex-grow flex flex-col justify-center">
-            {/* Badge grid and button */}
-            <div className="flex flex-col lg:flex-row justify-between items-stretch gap-8 w-full">
-              {/* Grille des badges (100% responsive, custom styled capsules) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
-                {/* Badge 1 : GAGNE DE L'ARGENT */}
-                <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-6 text-white text-[13px] md:text-sm lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center">
-                  GAGNE DE L'ARGENT
-                </div>
-
-                {/* Badge 2 : AIDE UN BOXEUR */}
-                <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-6 text-white text-[13px] md:text-sm lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center">
-                  AIDE UN BOXEUR
-                </div>
-
-                {/* Badge 3 : ÉVITE LE GASPILLAGE */}
-                <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-6 text-white text-[13px] md:text-sm lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center">
-                  ÉVITE LE GASPILLAGE
-                </div>
-
-                {/* Badge 4 : VENTE SIMPLE ET RAPIDE */}
-                <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-6 text-white text-[13px] md:text-sm lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center">
-                  VENTE SIMPLE ET RAPIDE
-                </div>
+            {/* Badges Grid (2x2 grid on larger screens, 1 column on mobile) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[650px] w-full">
+              {/* Badge 1 : GAGNE DE L'ARGENT */}
+              <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-8 text-white text-[13px] md:text-base lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center whitespace-nowrap">
+                GAGNE DE L'ARGENT
               </div>
 
-              {/* Bouton Rouge REVENDRE - beautifully styled, fully responsive */}
-              <div className="flex items-center justify-center lg:justify-end">
-                <button
-                  onClick={() => navigate("/sell")}
-                  className="w-full sm:w-auto min-w-[220px] md:min-w-[260px] bg-[#ff0000] hover:bg-[#cc0000] border-none text-white font-black text-base md:text-lg uppercase tracking-widest rounded-full py-4 px-8 flex items-center justify-center gap-3 transition-all cursor-pointer shadow-lg hover:opacity-90 active:scale-95 whitespace-nowrap"
-                >
-                  REVENDRE
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </button>
+              {/* Badge 2 : AIDE UN BOXEUR */}
+              <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-8 text-white text-[13px] md:text-base lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center whitespace-nowrap">
+                AIDE UN BOXEUR
+              </div>
+
+              {/* Badge 3 : ÉVITE LE GASPILLAGE */}
+              <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-8 text-white text-[13px] md:text-base lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center whitespace-nowrap">
+                ÉVITE LE GASPILLAGE
+              </div>
+
+              {/* Badge 4 : VENTE SIMPLE ET RAPIDE */}
+              <div className="border-2 border-[#A6A6A6] rounded-full py-4 px-8 text-white text-[13px] md:text-base lg:text-[18px] font-bold tracking-widest uppercase bg-transparent flex items-center justify-center text-center whitespace-nowrap">
+                VENTE SIMPLE ET RAPIDE
               </div>
             </div>
           </div>
+
+          {/* Right Column: Button aligned to the bottom right */}
+          <div className="flex items-center justify-end w-full md:w-auto md:pb-2">
+            <button
+              onClick={() => navigate("/sell")}
+              className="bg-[#ff0000] hover:bg-[#cc0000] border-none text-white font-black text-lg md:text-xl lg:text-2xl uppercase tracking-widest rounded-full py-5 px-10 md:py-6 md:px-12 flex items-center gap-4 transition-all cursor-pointer shadow-2xl hover:scale-105 active:scale-95 whitespace-nowrap"
+            >
+              REVENDRE
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </div>
+
         </div>
       </section>
     </div>
