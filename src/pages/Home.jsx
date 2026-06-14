@@ -367,9 +367,11 @@ export default function Home() {
                   style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 >
                   {filteredArticles.slice(0, 10).map((item) => {
-                    const imageUrl = item.imageUrl
-                      ? `http://localhost:8000${item.imageUrl}`
-                      : null;
+                    const imageUrl = item.photos && item.photos.length > 0
+                      ? `http://localhost:8000/images/photos/${item.photos[0].nomFichier}`
+                      : item.imageUrl
+                        ? `http://localhost:8000${item.imageUrl}`
+                        : null;
                     return (
                       <div
                         key={item.id}

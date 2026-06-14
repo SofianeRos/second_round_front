@@ -65,9 +65,11 @@ function DropdownFilter({ label, options, selected, onToggle, onClear }) {
 // ─── composant ProductCard catalogue ─────────────────────────────────────────
 function CatalogueCard({ article, isFavorite, onToggleFavorite }) {
   const navigate = useNavigate();
-  const imageUrl = article.imageUrl
-    ? `http://localhost:8000${article.imageUrl}`
-    : null;
+  const imageUrl = article.photos && article.photos.length > 0
+    ? `http://localhost:8000/images/photos/${article.photos[0].nomFichier}`
+    : article.imageUrl
+      ? `http://localhost:8000${article.imageUrl}`
+      : null;
 
   return (
     <div
